@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liftwork — AI-Powered CX Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+--white:#FFF;--cream:#FAF8F5;--warm:#F3F0EC;--lgray:#E8E4DF;--mgray:#C4BDB4;
+--tx:#1A1D21;--tx2:#4A4F57;--tx3:#8A8F97;
+--teal:#1AAFA0;--td:#0E8577;--tl:#5CDECE;--tp:#E6F9F6;
+--coral:#FF6B5B;--cl:#FF9A8F;--cp:#FFF0EE;
+--amber:#F5A623;--ap:#FFF7E6;--navy:#1C2B3A;
+--green:#34C77B;--red:#E85D5D;
+--gt:linear-gradient(135deg,#1AAFA0,#5CDECE);
+--gw:linear-gradient(135deg,#FF6B5B,#F5A623);
+--ss:0 1px 3px rgba(26,29,33,.04);--sm:0 4px 20px rgba(26,29,33,.06);
+--sl:0 12px 40px rgba(26,29,33,.08);--st:0 8px 30px rgba(26,175,160,.15);
+--r:16px;--rs:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--tx);line-height:1.6;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,248,245,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,.04)}
+nav img{height:30px}.nl{display:flex;gap:2rem;align-items:center}
+.nl a{color:var(--tx2);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}.nl a:hover{color:var(--teal)}
+.nc{background:var(--gt)!important;color:#fff!important;padding:.6rem 1.5rem;border-radius:50px;font-weight:700!important;font-size:.8rem!important;box-shadow:var(--st);transition:transform .2s}.nc:hover{transform:translateY(-1px)}
+
+h1{font-family:'DM Serif Display',serif;font-size:clamp(3rem,6vw,5.25rem);line-height:1.05;color:var(--navy)}
+h2{font-family:'DM Serif Display',serif;font-size:clamp(2.15rem,4vw,3.25rem);line-height:1.12;color:var(--navy)}
+h3{font-size:1.15rem;font-weight:700;color:var(--navy)}
+.tt{color:var(--teal)}.tc{color:var(--coral)}
+.tag{display:inline-flex;align-items:center;gap:.4rem;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);background:var(--tp);padding:.4rem 1rem;border-radius:50px}
+.sub{font-size:1.05rem;color:var(--tx2);max-width:620px;line-height:1.75;margin-top:1.25rem}
+section{padding:6.5rem 3rem;max-width:1280px;margin:0 auto}
+.fw{max-width:100%;padding-left:0;padding-right:0}.inner{max-width:1280px;margin:0 auto;padding:0 3rem}
+.card{background:var(--white);border-radius:var(--r);padding:2rem;box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04)}
+.card-t{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:.85rem;font-weight:600}
+.bp{display:inline-flex;align-items:center;gap:.6rem;background:var(--gt);color:#fff;padding:1rem 2.25rem;border-radius:50px;font-weight:700;font-size:.95rem;text-decoration:none;box-shadow:var(--st);transition:all .25s}.bp:hover{transform:translateY(-2px)}
+.bs{display:inline-flex;align-items:center;gap:.5rem;color:var(--td);background:var(--tp);padding:1rem 2rem;border-radius:50px;font-weight:600;font-size:.95rem;text-decoration:none;transition:all .2s}.bs:hover{background:rgba(26,175,160,.08)}
+
+/* HERO */
+.hw{position:relative;overflow:hidden;background:var(--white);min-height:100vh}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.b1{width:400px;height:400px;background:var(--tl);top:-100px;right:5%;opacity:.12}
+.b2{width:300px;height:300px;background:var(--cl);bottom:10%;left:5%;opacity:.08}
+.hero{display:flex;flex-direction:column;justify-content:center;min-height:100vh;padding:7rem 3rem 5rem;max-width:1280px;margin:0 auto;position:relative;z-index:2}
+.hero h1{margin-bottom:1.75rem;max-width:780px}.hero-sub{font-size:1.15rem;line-height:1.75;color:var(--tx2);max-width:620px;margin-bottom:3rem}
+.stats{display:flex;gap:3.5rem;padding-top:3rem;border-top:2px solid var(--lgray);flex-wrap:wrap}
+.stat .sn{font-family:'DM Serif Display',serif;font-size:2.75rem;background:var(--gt);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.stat .sl{font-size:.78rem;color:var(--tx3);margin-top:.3rem;max-width:160px;line-height:1.4}
+
+/* PERSONAS */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;margin-top:3rem}
+.pers{padding:2.25rem;border-radius:var(--r);background:var(--white);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);position:relative;overflow:hidden;transition:box-shadow .3s,transform .3s}
+.pers:hover{box-shadow:var(--sm);transform:translateY(-3px)}
+.pers::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.pers:nth-child(1)::before{background:var(--gw)}.pers:nth-child(2)::before{background:linear-gradient(90deg,var(--coral),var(--cl))}.pers:nth-child(3)::before{background:linear-gradient(90deg,var(--amber),#FFD54F)}
+.pr{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:.35rem}
+.pers:nth-child(1) .pr{color:var(--coral)}.pers:nth-child(2) .pr{color:#E04E9A}.pers:nth-child(3) .pr{color:var(--amber)}
+.pn{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--navy);margin-bottom:1rem;line-height:1.2}
+.pq{font-size:.9rem;color:var(--tx2);line-height:1.7;font-style:italic;padding-left:1rem;border-left:2px solid var(--lgray);margin-bottom:1rem}
+.pp{font-size:.8rem;color:var(--tx3);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5;margin-top:.4rem}.pp::before{content:'↳';color:var(--coral);font-weight:700;flex-shrink:0}
+
+/* CORE PROBLEM */
+.cp-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:3rem;align-items:start}
+.cp-left{font-size:1rem;color:var(--tx2);line-height:1.8}
+.cp-left strong{color:var(--navy)}
+.cp-right{display:flex;flex-direction:column;gap:1rem}
+.cp-stat{padding:1.25rem 1.5rem;border-radius:var(--rs);display:flex;align-items:center;gap:1.25rem}
+.cp-stat .cpn{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1;flex-shrink:0;min-width:60px}
+.cp-stat p{font-size:.82rem;color:var(--tx2);line-height:1.5}
+
+/* PARALLEL */
+.par-wrap{margin-top:3rem;border-radius:var(--r);overflow:hidden;box-shadow:var(--sm)}
+.par-header{display:grid;grid-template-columns:1fr 50px 1fr}
+.par-head{padding:1rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.par-head.human{background:var(--cp);color:var(--coral)}
+.par-head.agent{background:var(--tp);color:var(--td)}
+.par-head-mid{background:var(--navy)}
+.par-body{display:flex;flex-direction:column}
+.par-row-wrap{display:grid;grid-template-columns:1fr 50px 1fr;border-bottom:1px solid var(--lgray)}
+.par-row-wrap:last-child{border-bottom:none}
+.par-cell{padding:1rem 1.5rem;background:var(--white)}
+.par-cell h4{font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.2rem}
+.par-cell p{font-size:.78rem;color:var(--tx3);line-height:1.5}
+.par-cell-mid{background:var(--navy);display:flex;align-items:center;justify-content:center}
+.par-eq{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);color:var(--tl);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800}
+
+/* THREE-WAY */
+.tw{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:3rem;border-radius:var(--r);overflow:hidden;box-shadow:var(--sm)}
+.tw-col{padding:2rem;background:var(--white)}
+.tw-col:nth-child(2){background:var(--navy);color:white;border-left:3px solid var(--teal);border-right:3px solid var(--teal)}
+.tw-col h3{font-size:1.05rem;margin-bottom:1rem}.tw-col:nth-child(2) h3{color:white}
+.tw-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:.5rem;display:block}
+.tw-col:nth-child(1) .tw-tag{color:var(--amber)}.tw-col:nth-child(2) .tw-tag{color:var(--tl)}.tw-col:nth-child(3) .tw-tag{color:var(--coral)}
+.tw-item{font-size:.8rem;padding:.45rem 0;border-bottom:1px solid rgba(0,0,0,.06);line-height:1.5;color:var(--tx2)}
+.tw-col:nth-child(2) .tw-item{border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+.tw-item:last-child{border:none}
+.tw-conn{display:flex;align-items:center;gap:.4rem;margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:500}
+.tw-col:nth-child(1) .tw-conn{color:var(--amber)}.tw-col:nth-child(2) .tw-conn{color:var(--tl)}.tw-col:nth-child(3) .tw-conn{color:var(--coral)}
+
+/* EVOLUTION */
+.evo{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3rem}
+.evo-card{padding:1.75rem;border-radius:var(--r);background:var(--white);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);position:relative;overflow:hidden}
+.evo-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.evo-card:nth-child(1)::before{background:var(--lgray)}.evo-card:nth-child(2)::before{background:var(--teal);opacity:.5}.evo-card:nth-child(3)::before{background:var(--teal)}.evo-card:nth-child(4)::before{background:var(--gt)}
+.evo-when{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:.65rem;font-weight:600}
+.evo-card h3{font-size:1rem;margin-bottom:.5rem}
+.evo-card p{font-size:.78rem;color:var(--tx3);line-height:1.6}
+.evo-metrics{margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--lgray);display:flex;flex-direction:column;gap:.35rem}
+.evo-m{display:flex;justify-content:space-between;font-size:.72rem}
+.evo-m .eml{color:var(--tx3)}.evo-m .emv{font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--navy)}
+
+/* SLA */
+.sla-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+.sla-card{border-radius:var(--r);overflow:hidden}
+.sla-head{padding:1rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.sla-old .sla-head{background:var(--warm);color:var(--tx3);text-decoration:line-through}.sla-new .sla-head{background:var(--tp);color:var(--td)}
+.sla-body{background:var(--white);padding:1.25rem 1.5rem;border:1px solid var(--lgray);border-top:none;border-radius:0 0 var(--r) var(--r)}
+.sla-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--warm);font-size:.82rem;align-items:center}
+.sla-row:last-child{border:none}
+.sla-row .sl-l{color:var(--tx3)}.sla-row .sl-v{font-weight:600;font-family:'JetBrains Mono',monospace}
+.sla-new .sl-v{color:var(--teal)}
+
+/* DEMO PANELS */
+.dw{background:var(--white);border-radius:20px;box-shadow:var(--sl);overflow:hidden;border:1px solid rgba(0,0,0,.04);margin-top:3rem}
+.dt{padding:1rem 2rem;background:var(--navy);display:flex;justify-content:space-between;align-items:center}
+.dots{display:flex;gap:6px}.dot{width:10px;height:10px;border-radius:50%}.dr{background:#FF5F57}.dy{background:#FEBC2E}.dg{background:#28C840}
+.dtb{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.5)}
+.dbd{font-family:'JetBrains Mono',monospace;font-size:.6rem;background:rgba(26,175,160,.2);color:var(--tl);padding:.25rem .75rem;border-radius:50px;text-transform:uppercase;letter-spacing:.08em}
+.di{padding:2.5rem}
+
+/* DIAG */
+.dl{display:grid;grid-template-columns:240px 1fr;gap:2rem}
+.ds{display:flex;flex-direction:column;gap:.85rem}
+.dm{padding:1rem;border-radius:var(--rs);background:var(--cream);border:1px solid var(--lgray)}
+.dml{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.15rem}
+.dmv{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--navy)}
+.dmc{font-family:'JetBrains Mono',monospace;font-size:.62rem;margin-top:.1rem}
+.pos{color:var(--green)}.neg{color:var(--red)}.neu{color:var(--amber)}
+.fh{font-family:'JetBrains Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:.4rem}
+.fl{display:flex;flex-direction:column;gap:.7rem}
+.fr{display:flex;align-items:center;gap:1rem;padding:.8rem 1.1rem;border-radius:var(--rs);background:var(--cream);border:1px solid var(--lgray);transition:border-color .2s}
+.fr:hover{border-color:var(--teal)}
+.fn{flex:1;font-weight:600;font-size:.85rem}
+.fbw{flex:2;height:10px;background:var(--lgray);border-radius:5px;overflow:hidden}
+.fb{height:100%;border-radius:5px}.fb.hi{background:var(--gw)}.fb.me{background:linear-gradient(90deg,var(--amber),#FFD54F)}.fb.lo{background:linear-gradient(90deg,var(--green),#81C784)}
+.fs{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:600;width:2.5rem;text-align:right}
+.rb{margin-top:1.25rem;padding:1.25rem;border-radius:var(--rs);background:var(--tp);border:1px solid rgba(26,175,160,.2)}
+.rbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--td);margin-bottom:.4rem;font-weight:600}
+.rb p{font-size:.82rem;color:var(--tx2);line-height:1.65}.rb strong{color:var(--navy)}
+
+/* CONV */
+.clx{display:grid;grid-template-columns:1fr 300px;gap:2rem}
+.cw{border-radius:var(--r);overflow:hidden;border:1px solid var(--lgray);background:var(--white)}
+.ctop{padding:.8rem 1.25rem;background:var(--cream);border-bottom:1px solid var(--lgray);display:flex;justify-content:space-between;align-items:center}
+.cn{font-weight:700;font-size:.88rem;color:var(--navy)}
+.clv{display:flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:600;color:var(--green)}
+.clv::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.cms{padding:1.25rem;display:flex;flex-direction:column;gap:.75rem;max-height:500px;overflow-y:auto}
+.m{max-width:82%;padding:.85rem 1.1rem;border-radius:18px;font-size:.85rem;line-height:1.6}
+.m-c{align-self:flex-start;background:var(--warm);border-bottom-left-radius:6px}
+.m-a{align-self:flex-end;background:var(--teal);color:#fff;border-bottom-right-radius:6px}
+.m-h{align-self:flex-end;background:linear-gradient(135deg,var(--td),var(--teal));color:#fff;border-bottom-right-radius:6px}
+.m-s{align-self:center;max-width:100%;background:var(--tp);border:1px dashed rgba(26,175,160,.3);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--td);text-align:center;padding:.5rem .85rem;line-height:1.6}
+.mw{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem;display:block;opacity:.7}
+.csd{display:flex;flex-direction:column;gap:.85rem}
+.sp{padding:1.1rem;border-radius:var(--rs);background:var(--white);border:1px solid var(--lgray)}
+.sp h4{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:.65rem;font-weight:600}
+.spr{display:flex;justify-content:space-between;align-items:center;padding:.3rem 0;border-bottom:1px solid var(--warm);font-size:.75rem}
+.spr:last-child{border:none}.spl{color:var(--tx3)}.spv{font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .6rem;border-radius:50px;font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:500;background:var(--tp);color:var(--td);margin:.12rem;border:1px solid rgba(26,175,160,.15)}.pill::before{content:'◆';font-size:.4rem}
+
+/* RESULTS */
+.rr{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-top:3rem}
+
+/* ENTRY POINTS */
+
+/* SYNTHETIC STUDIO */
+.syn-wrap{margin-top:3rem;border-radius:20px;overflow:hidden;box-shadow:var(--sl);border:1px solid rgba(0,0,0,.04)}
+.syn-header{padding:1.25rem 2rem;background:var(--navy);display:flex;justify-content:space-between;align-items:center}
+.syn-header h3{color:white;font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400}
+.syn-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;background:rgba(92,222,206,.15);color:var(--tl);padding:.3rem .85rem;border-radius:50px;text-transform:uppercase;letter-spacing:.1em}
+.syn-body{background:var(--white);padding:2rem}
+.syn-mission{padding:1.15rem 1.5rem;background:var(--cream);border-radius:var(--rs);border:1px solid var(--lgray);display:flex;align-items:center;gap:1.25rem;margin-bottom:1.5rem}
+.syn-problem{padding:1.25rem 1.5rem;background:var(--cp);border:1px solid rgba(255,107,91,.15);border-radius:var(--rs);margin-bottom:1.5rem;display:flex;align-items:center;gap:1.25rem}
+.syn-problem .sp-icon{width:42px;height:42px;border-radius:10px;background:var(--coral);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;color:white}
+
+/* Sim grid */
+.sim-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;margin-bottom:1.5rem}
+.sim-cell{border-radius:var(--rs);border:1px solid var(--lgray);background:var(--cream);overflow:hidden;opacity:0;transform:translateY(8px);min-height:155px}
+.sim-cell.visible{animation:cellAppear .4s ease forwards}
+.sim-cell-head{padding:.4rem .6rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--lgray);background:var(--warm)}
+.sim-cell-head .sch-av{font-size:.75rem}.sim-cell-head .sch-nm{font-size:.62rem;font-weight:700;color:var(--navy)}.sim-cell-head .sch-st{font-family:'JetBrains Mono',monospace;font-size:.5rem;border-radius:50px;padding:.1rem .4rem;font-weight:600}
+.st-saved{background:rgba(26,175,160,.12);color:var(--teal)}.st-lost{background:rgba(255,107,91,.12);color:var(--coral)}.st-esc{background:rgba(245,166,35,.12);color:var(--amber)}.st-active{background:rgba(26,175,160,.08);color:var(--teal)}
+.sim-cell-body{padding:.5rem;display:flex;flex-direction:column;gap:.3rem;max-height:200px;overflow-y:auto;scroll-behavior:smooth}
+@keyframes simFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sim-bubble{padding:.3rem .55rem;border-radius:10px;font-size:.58rem;line-height:1.4;max-width:88%}
+.sim-bubble-c{align-self:flex-start;background:var(--white);border:1px solid var(--lgray);color:var(--tx);border-bottom-left-radius:3px}
+.sim-bubble-a{align-self:flex-end;color:white;border-bottom-right-radius:3px}
+.sim-bubble-a.strat-c{background:var(--teal)}.sim-bubble-a.strat-b{background:var(--amber)}.sim-bubble-a.strat-a{background:var(--coral)}
+.sim-typing{display:flex;gap:3px;padding:.35rem .55rem;align-self:flex-end}
+.sim-typing span{width:4px;height:4px;border-radius:50%;background:var(--mgray);animation:typing .8s infinite}
+.sim-typing span:nth-child(2){animation-delay:.15s}.sim-typing span:nth-child(3){animation-delay:.3s}
+@keyframes typing{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes cellAppear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Metrics row */
+.sim-met-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.sim-mc{padding:1rem;border-radius:var(--rs);background:var(--cream);border:1px solid var(--lgray);text-align:center}
+.sim-mc .smc-l{font-family:'JetBrains Mono',monospace;font-size:.5rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.3rem;font-weight:500}
+.sim-mc .smc-v{font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1;transition:all .5s}
+.sim-mc .smc-c{font-family:'JetBrains Mono',monospace;font-size:.58rem;margin-top:.15rem}
+.sim-bar-w{height:6px;background:var(--lgray);border-radius:3px;overflow:hidden;margin-top:.5rem}
+.sim-bar{height:100%;border-radius:3px;transition:width 2s ease}
+
+/* Strategy results */
+.strat-results{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;padding-top:1.25rem;border-top:1px solid var(--lgray)}
+.strat-card{padding:1.15rem;border-radius:var(--rs);text-align:center}
+.strat-card h4{font-size:.78rem;margin-bottom:.25rem;display:flex;align-items:center;justify-content:center;gap:.4rem}
+.strat-card h4 .sd{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.strat-card p{font-size:.65rem;color:var(--tx3);line-height:1.5}
+.strat-card .sc-r{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:700;margin-top:.45rem}
+
+/* Counter */
+.sim-counter{text-align:center;margin-bottom:1.5rem;font-family:'JetBrains Mono',monospace}
+.sim-counter .sc-num{font-size:2.5rem;font-weight:700;background:var(--gt);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:all .3s}
+.sim-counter .sc-label{font-size:.65rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em}
+
+@media(max-width:960px){.sim-grid{grid-template-columns:1fr 1fr}.sim-met-row{grid-template-columns:1fr 1fr}.strat-results{grid-template-columns:1fr}}
+.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;margin-top:3rem}
+.ep{padding:2.5rem;border-radius:var(--r);background:var(--white);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);position:relative;overflow:hidden;transition:box-shadow .3s,transform .3s}
+.ep:hover{box-shadow:var(--sm);transform:translateY(-3px)}
+.ep::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.ep:nth-child(1)::before{background:var(--gt)}.ep:nth-child(2)::before{background:linear-gradient(90deg,var(--teal),var(--amber))}.ep:nth-child(3)::before{background:var(--gw)}
+.ep-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:.5rem}
+.ep:nth-child(1) .ep-label{color:var(--teal)}.ep:nth-child(2) .ep-label{color:var(--amber)}.ep:nth-child(3) .ep-label{color:var(--coral)}
+.ep h3{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400;color:var(--navy);margin-bottom:.85rem;line-height:1.2}
+.ep>p{font-size:.88rem;color:var(--tx2);line-height:1.7;margin-bottom:1.25rem}
+.ep-signals{padding-top:1rem;border-top:1px solid var(--lgray)}
+.ep-sig-label{font-family:'JetBrains Mono',monospace;font-size:.52rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.5rem;font-weight:500}
+.ep-sig{font-size:.78rem;color:var(--tx3);padding:.3rem 0;display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+.ep:nth-child(1) .ep-sig::before{content:'→';color:var(--teal);font-weight:700}
+.ep:nth-child(2) .ep-sig::before{content:'→';color:var(--amber);font-weight:700}
+.ep:nth-child(3) .ep-sig::before{content:'→';color:var(--coral);font-weight:700}
+.ep-bottom{margin-top:1.25rem;padding:1rem;border-radius:var(--rs);font-size:.8rem;font-weight:600;text-align:center}
+.ep:nth-child(1) .ep-bottom{background:var(--tp);color:var(--td)}
+.ep:nth-child(2) .ep-bottom{background:var(--ap);color:#D4940B}
+.ep:nth-child(3) .ep-bottom{background:var(--cp);color:var(--coral)}
+.re{text-align:center;padding:2.25rem 1.25rem;background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04)}
+.ren{font-family:'DM Serif Display',serif;font-size:3rem;line-height:1;background:var(--gt);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.rel{font-size:.85rem;color:var(--tx2);margin-top:.45rem;font-weight:500}
+.res{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--tx3);margin-top:.25rem}
+
+/* ENGAGE */
+.er2{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;margin-top:3rem}
+.en{padding:2.25rem;border-radius:var(--r);background:var(--white);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);transition:box-shadow .3s}.en:hover{box-shadow:var(--sm)}
+.enp{font-family:'JetBrains Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin-bottom:.75rem;font-weight:600}
+.en h3{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--navy);margin-bottom:.5rem}
+.ent{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--coral);font-weight:500;margin-bottom:.85rem}
+.en>p{font-size:.82rem;color:var(--tx3);line-height:1.65}
+.end{margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--lgray)}
+.edh{font-family:'JetBrains Mono',monospace;font-size:.52rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.4rem;font-weight:500}
+.edi{font-size:.78rem;color:var(--tx2);padding:.25rem 0;display:flex;align-items:center;gap:.5rem}.edi::before{content:'→';color:var(--teal);font-weight:700}
+
+/* QUOTE */
+.qw{padding:3.5rem;background:var(--white);border-radius:20px;box-shadow:var(--sm);position:relative;overflow:hidden}
+.qw::before{content:'';position:absolute;top:0;left:0;bottom:0;width:5px;background:var(--gt)}
+.qt{font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1.45;font-style:italic;color:var(--navy);max-width:900px}
+.qa{margin-top:1rem;font-size:.78rem;color:var(--tx3);font-weight:500}
+
+/* CTA */
+.ctaw{background:var(--navy);border-radius:24px;padding:5.5rem 4rem;text-align:center;position:relative;overflow:hidden;margin:0 3rem}
+.ctaw::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(26,175,160,.15)0,transparent 60%),radial-gradient(ellipse at 70% 70%,rgba(255,107,91,.08)0,transparent 50%);pointer-events:none}
+.ctaw h2{color:#fff;position:relative;z-index:2}
+.ctaw .cs{font-size:1.02rem;color:rgba(255,255,255,.6);max-width:560px;margin:1.5rem auto 2.5rem;line-height:1.7;position:relative;z-index:2}
+.ctaw .bp{position:relative;z-index:2;font-size:1.02rem;padding:1.1rem 2.5rem}
+
+footer{padding:3rem;max-width:1280px;margin:2rem auto 0;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--lgray)}
+footer img{height:22px;opacity:.5}.ft{font-size:.72rem;color:var(--tx3)}
+
+/* BLUEPRINT */
+.agent-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:.75rem}
+.ac{padding:1rem;border-radius:var(--rs);border:1px solid var(--lgray);background:var(--cream)}
+.ac h4{font-size:.82rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.ac p{font-size:.72rem;color:var(--tx3);line-height:1.5;margin:0}
+.ac .act{font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);margin-bottom:.3rem;font-weight:500}
+.ac .acm{display:inline-flex;align-items:center;gap:.25rem;font-family:'JetBrains Mono',monospace;font-size:.55rem;padding:.15rem .5rem;border-radius:50px;background:rgba(26,175,160,.08);color:var(--td);margin-top:.5rem}
+.conn-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.conn{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .75rem;border-radius:50px;font-size:.7rem;font-weight:600;background:var(--white);border:1px solid var(--lgray)}
+.conn-i{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:white;font-weight:800}
+.gr-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
+.gr{padding:.85rem 1rem;border-radius:var(--rs);font-size:.78rem;line-height:1.5}
+.gr.gate{background:var(--ap);border:1px solid rgba(245,166,35,.2);color:var(--tx2)}
+.gr.esc{background:var(--cp);border:1px solid rgba(255,107,91,.15);color:var(--tx2)}
+.gr .grl{font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:.25rem;display:block}
+.gr.gate .grl{color:var(--amber)}.gr.esc .grl{color:var(--coral)}
+.bp-note{margin-top:1.25rem;padding:1.25rem;border-radius:var(--rs);background:linear-gradient(135deg,var(--tp),rgba(255,247,230,.5));border:1px solid rgba(26,175,160,.12);display:flex;gap:1rem;align-items:flex-start}
+.bp-note p{font-size:.82rem;color:var(--tx2);line-height:1.6;margin:0}.bp-note strong{color:var(--navy)}
+.wf-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;margin-top:.5rem}
+.wf-step{text-align:center;padding:.65rem .35rem;border-radius:8px}
+.wf-step .wft{font-size:.6rem;font-family:'JetBrains Mono',monospace;font-weight:600}.wf-step .wfn{font-size:.72rem;font-weight:600;color:var(--navy);margin-top:.2rem}
+.wf-auto{background:var(--tp);border:1px solid rgba(26,175,160,.15)}.wf-auto .wft{color:var(--td)}
+.wf-gate{background:var(--ap);border:1px solid rgba(245,166,35,.2)}.wf-gate .wft{color:var(--amber)}
+.wf-human{background:var(--cp);border:1px solid rgba(255,107,91,.15)}.wf-human .wft{color:var(--coral)}
+.bp-sec{margin-top:2rem;padding:1.75rem 2rem;background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04)}
+.bp-sec h3{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+.bp-tag{font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .6rem;border-radius:50px;font-weight:600}
+.bp-sec>p{font-size:.88rem;color:var(--tx2);line-height:1.65;margin-bottom:.75rem}
+.bp-bridge{margin-top:3rem;padding:2rem 2.5rem;border-radius:var(--r);background:var(--navy);color:white;display:flex;gap:2rem;align-items:center}
+.bp-bridge p{font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.75)}.bp-bridge strong{color:white}
+.bp-bridge .bb-icon{font-size:2rem;flex-shrink:0}
+
+/* TEAM COMPARE */
+.team-compare{display:grid;grid-template-columns:1fr 60px 1fr;gap:0;margin-top:3rem;border-radius:20px;overflow:hidden;box-shadow:var(--sl)}
+.team-side{padding:2.5rem}
+.team-today{background:var(--warm)}
+.team-tomorrow{background:linear-gradient(135deg,#E6F9F6,#F0FBFA)}
+.team-mid{background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:white;font-size:.7rem;font-weight:700}
+.team-mid .tm-arrow{font-size:1.5rem;color:var(--tl)}
+.team-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:.75rem}
+.team-today .team-label{color:var(--coral)}.team-tomorrow .team-label{color:var(--teal)}
+.team-side h3{font-family:'DM Serif Display',serif;font-size:1.4rem;font-weight:400;color:var(--navy);margin-bottom:1.5rem;line-height:1.2}
+
+/* People grid */
+.ppl-grid{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:1.5rem}
+.ppl{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.55rem;transition:all .3s}
+.ppl-human{background:var(--coral);color:white}.ppl-human-elevated{background:var(--navy);color:white;border:2px solid var(--tl)}
+.ppl-agent{background:var(--teal);color:white;border-radius:5px}
+.ppl-lead{background:var(--amber);color:white}
+
+.ppl-legend{display:flex;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap}
+.ppl-legend-item{display:flex;align-items:center;gap:.35rem;font-size:.68rem;color:var(--tx3)}
+.ppl-legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.ppl-legend-dot.sq{border-radius:3px}
+
+/* Time allocation */
+.time-alloc{margin-top:1.25rem}
+.time-label{font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.5rem;font-weight:500}
+.time-row{display:flex;align-items:center;gap:.65rem;margin-bottom:.5rem;font-size:.78rem}
+.time-row .tr-name{width:110px;color:var(--tx2);font-weight:500;flex-shrink:0}
+.time-bar-wrap{flex:1;height:18px;background:rgba(0,0,0,.06);border-radius:9px;overflow:hidden;position:relative}
+.time-bar{height:100%;border-radius:9px;display:flex;align-items:center;padding-left:.5rem;font-size:.6rem;font-weight:700;color:white;font-family:'JetBrains Mono',monospace;transition:width .8s ease}
+.time-row .tr-pct{width:32px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;color:var(--tx3)}
+
+/* Bottom metrics strip */
+.team-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(0,0,0,.08)}
+.tm{text-align:center}
+.tm-num{font-family:'DM Serif Display',serif;font-size:1.5rem;line-height:1}
+.team-today .tm-num{color:var(--coral)}.team-tomorrow .tm-num{color:var(--teal)}
+.tm-label{font-size:.65rem;color:var(--tx3);margin-top:.2rem}
+
+@media(max-width:960px){
+section{padding:4rem 1.5rem}nav{padding:1rem 1.5rem}.nl{display:none}
+.pgrid,.cp-grid,.sla-grid{grid-template-columns:1fr}
+.par-header,.par-row-wrap{grid-template-columns:1fr}.par-head-mid,.par-cell-mid{display:none}
+.tw,.evo{grid-template-columns:1fr}.rr{grid-template-columns:1fr 1fr}
+.er2{grid-template-columns:1fr}.ep-grid{grid-template-columns:1fr}
+.syn-grid{grid-template-columns:1fr}.syn-personas{grid-template-columns:repeat(3,1fr)}.syn-metrics{grid-template-columns:1fr 1fr}.syn-arrow{display:none}.stats{gap:2rem}.ctaw{margin:0 1rem;padding:4rem 2rem}
+.clx,.dl{grid-template-columns:1fr}
+.team-compare{grid-template-columns:1fr}.team-mid{flex-direction:row;padding:.75rem}
+.agent-cards{grid-template-columns:1fr 1fr}.wf-steps{grid-template-columns:repeat(3,1fr)}
+.gr-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav><img src="https://i.imgur.com/csknqIs.png" alt="Liftwork"/><div class="nl"><a href="#problem">The Problem</a><a href="#parallel">Our Approach</a><a href="#action">In Action</a><a href="#engage">Engagement</a><a href="#cta" class="nc">Start a Diagnostic</a></div></nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hw">
+<div class="blob b1"></div><div class="blob b2"></div>
+<div class="hero">
+<div class="tag">◆ Liftwork</div>
+<h1>The operating model<br><span class="tt">for the AI era.</span></h1>
+<p class="hero-sub">AI agents can do incredible work — when they're designed with precision, managed with discipline, and continuously improved alongside the humans they work with. Liftwork brings the same operational rigor you'd expect for your best people to your agentic workforce. Design, oversight, performance, growth — for every agent in your operation.</p>
+<div style="display:flex;gap:1rem;align-items:center;margin-bottom:4rem;flex-wrap:wrap"><a href="#cta" class="bp">Start with a Diagnostic →</a><a href="#problem" class="bs">See the Problem ↓</a></div>
+<div class="stats">
+<div class="stat"><div class="sn">84%</div><div class="sl">of companies haven't redesigned jobs around AI</div></div>
+<div class="stat"><div class="sn">74%</div><div class="sl">plan to deploy agentic AI within two years</div></div>
+<div class="stat"><div class="sn">21%</div><div class="sl">have governance mature enough to scale</div></div>
+</div>
+</div>
+</div>
+
+<!-- ═══ PERSONA PAIN ═══ -->
+<section id="problem">
+<div class="tag">The Reality</div>
+<h2 style="margin-top:1.5rem">You already know something <span class="tc">isn't working.</span></h2>
+<p class="sub">You're hiring more agents, spending more on tools, and your CSAT is still flat. Meanwhile, every vendor you talk to says "just deploy AI." Sound familiar?</p>
+<div class="pgrid">
+<div class="pers"><div class="pr">The COO</div><div class="pn">I'm scaling, but I'm losing visibility.</div><div class="pq">"Every quarter we add headcount to hit our SLAs, but I have less clarity on what's actually happening. We're growing, but it doesn't feel like we're getting better — just bigger."</div><div class="pp">Workflows built on tribal knowledge that doesn't scale</div><div class="pp">No systematic way to identify what should be automated</div><div class="pp">Every new channel adds linear complexity</div></div>
+<div class="pers"><div class="pr">The CX Leader</div><div class="pn">My CSAT is flat despite everything we're doing.</div><div class="pq">"We keep investing in CX — better tools, more training, more QA — but our scores barely move. Our best agents are buried in routine work instead of the moments that matter."</div><div class="pp">Top agents spending 60%+ of time on repetitive tasks</div><div class="pp">Inconsistent brand voice across a growing team</div><div class="pp">No way to catch issues before they escalate</div></div>
+<div class="pers"><div class="pr">The CFO</div><div class="pn">CX costs are climbing and I can't bend the curve.</div><div class="pq">"We're spending more every quarter, and cost-per-resolution keeps creeping up. I see AI everywhere in vendor pitches, but none of it shows up in the P&L as actual savings."</div><div class="pp">Cost per resolution increasing with every new hire</div><div class="pp">AI investments that produce demos, not margin improvement</div><div class="pp">No path to the economics AI should enable</div></div>
+</div>
+</section>
+
+<!-- ═══ THE CORE PROBLEM ═══ -->
+<section class="fw" style="background:var(--white)"><div class="inner">
+<div class="tag">The Real Gap</div>
+<h2 style="margin-top:1.5rem">Designing agents is a real skill.<br><span class="tt">But it's only half the problem.</span></h2>
+<div class="cp-grid">
+<div class="cp-left">
+<p>Getting agentic design right matters. <strong>Choosing the right models, designing the right skills, building the right guardrails</strong> — that's genuinely hard work that requires deep expertise. The architecture decisions are real.</p>
+<p style="margin-top:1.25rem">But look at what's actually happening in the market. <strong>McKinsey charges $1.5M for a transformation strategy — and leaves.</strong> Accenture builds the agents — and leaves. Salesforce sells you AgentForce — and you're on your own to run it. Your engineering team builds custom agents that work beautifully in demos — and nobody sticks around to manage them in production.</p>
+<p style="margin-top:1.25rem">There's a reason <strong>OpenAI just partnered with BCG, McKinsey, Accenture, and Capgemini</strong> — because even the company that builds the models knows clients can't operationalize agents without help. But those consultancies design and advise. They don't run the operation.</p>
+<p style="margin-top:1.25rem">That's the gap. <strong>BCG estimates it at $200 billion.</strong> The companies that win need the design capability to build the right agents <em>and</em> the operational discipline to run them in production — from one partner, in one relationship, continuously improving. <strong>Liftwork is that partner.</strong></p>
+</div>
+<div class="cp-right">
+<div class="cp-stat" style="background:var(--cp);border:1px solid rgba(255,107,91,.15)"><div class="cpn" style="color:var(--coral)">84%</div><p>of companies haven't redesigned operations around AI capabilities — Deloitte 2026</p></div>
+<div class="cp-stat" style="background:var(--ap);border:1px solid rgba(245,166,35,.15)"><div class="cpn" style="color:var(--amber)">40%</div><p>of agentic AI projects will be canceled by 2027 due to unclear value or inadequate controls</p></div>
+<div class="cp-stat" style="background:var(--tp);border:1px solid rgba(26,175,160,.15)"><div class="cpn" style="color:var(--teal)">5%</div><p>of companies are "future-built" around agentic AI — BCG found they see 6.2% revenue lift vs 1.2% for laggards</p></div>
+</div>
+</div>
+</div></section>
+
+<!-- ═══ THE WORKFORCE PARALLEL ═══ -->
+<section id="parallel">
+<div class="tag">The Liftwork Approach</div>
+<h2 style="margin-top:1.5rem">We manage agents <span class="tt">the same way we manage people.</span><br>Because that's what it takes.</h2>
+<p class="sub">Every discipline that makes a human workforce perform — recruiting, onboarding, training, QA, coaching, career growth — has a direct parallel in the agentic world. Companies that skip this operational layer fail. Liftwork provides it.</p>
+
+<div class="par-wrap">
+<div class="par-header">
+<div class="par-head human">Managing Human Agents</div>
+<div class="par-head-mid"></div>
+<div class="par-head agent">Managing Agent Skills</div>
+</div>
+<div class="par-body">
+<div class="par-row-wrap">
+<div class="par-cell"><h4>Recruiting</h4><p>Define the role. Screen for skills, judgment, cultural fit. Hire for the work.</p></div>
+<div class="par-cell-mid"><div class="par-eq">=</div></div>
+<div class="par-cell"><h4>Skill Design</h4><p>Define the task scope. Select the model. Set boundaries, inputs, outputs, and failure modes.</p></div>
+</div>
+<div class="par-row-wrap">
+<div class="par-cell"><h4>Onboarding</h4><p>Train on brand voice, systems, policies. Shadow experienced agents before going live.</p></div>
+<div class="par-cell-mid"><div class="par-eq">=</div></div>
+<div class="par-cell"><h4>Deployment & Calibration</h4><p>Run in shadow mode. Compare against human performance. Tune until production-ready.</p></div>
+</div>
+<div class="par-row-wrap">
+<div class="par-cell"><h4>Quality Assurance</h4><p>Review calls and tickets. Score for accuracy, tone, resolution. Coach on gaps.</p></div>
+<div class="par-cell-mid"><div class="par-eq">=</div></div>
+<div class="par-cell"><h4>Performance Monitoring</h4><p>Review agent interactions. Score for accuracy, persona alignment, resolution quality. Refine prompts.</p></div>
+</div>
+<div class="par-row-wrap">
+<div class="par-cell"><h4>Performance Management</h4><p>Track metrics. Identify underperformers. Provide feedback loops for improvement.</p></div>
+<div class="par-cell-mid"><div class="par-eq">=</div></div>
+<div class="par-cell"><h4>Skill Refinement</h4><p>Track performance by category. Identify drift. Adjust guardrails, update examples, retune skills.</p></div>
+</div>
+<div class="par-row-wrap">
+<div class="par-cell"><h4>Continuous Training</h4><p>Policy changes, new products, seasonal shifts. Keep the team current.</p></div>
+<div class="par-cell-mid"><div class="par-eq">=</div></div>
+<div class="par-cell"><h4>Knowledge Curation</h4><p>Policy updates, product changes, seasonal patterns. Keep agent knowledge current in real time.</p></div>
+</div>
+<div class="par-row-wrap">
+<div class="par-cell"><h4>Career Development</h4><p>Expand scope over time. Move from tier-1 to tier-2. Specialize in complex cases.</p></div>
+<div class="par-cell-mid"><div class="par-eq">=</div></div>
+<div class="par-cell"><h4>Capability Expansion</h4><p>Graduate skills from simple returns to exchanges, then warranties, then proactive outreach.</p></div>
+</div>
+</div>
+</div>
+
+<div style="margin-top:2.5rem;padding:2rem;background:var(--white);border-radius:var(--r);box-shadow:var(--sm);text-align:center">
+<p style="font-size:1.05rem;color:var(--tx2);line-height:1.75;max-width:760px;margin:0 auto"><strong style="color:var(--navy)">Design + Operation = the full picture.</strong> Liftwork brings the agentic design expertise to architect the right solution — selecting models, composing skills, mapping integrations — and the operational discipline to manage it as a living workforce in production. One without the other doesn't work. Most companies can only find one. Liftwork is both.</p>
+</div>
+</section>
+
+<!-- ═══ THREE-WAY ALIGNMENT ═══ -->
+<section class="fw" style="background:var(--white)"><div class="inner">
+<div class="tag">The Hard Problem</div>
+<h2 style="margin-top:1.5rem">Three teams that have to work <span class="tt">as one.</span></h2>
+<p class="sub">The real challenge isn't building agents or managing humans. It's keeping the agentic workforce, the human workforce, and the client's own teams aligned — in real time, every day, as everything changes.</p>
+
+<div class="tw">
+<div class="tw-col">
+<span class="tw-tag">Client Teams</span>
+<h3>Your Business Changes Daily</h3>
+<div class="tw-item">Product catalog updates and new launches</div>
+<div class="tw-item">Policy changes (returns, pricing, promotions)</div>
+<div class="tw-item">Brand voice evolution and seasonal campaigns</div>
+<div class="tw-item">Engineering deploys new features that shift customer behavior</div>
+<div class="tw-item">Regulatory and compliance requirement changes</div>
+<div class="tw-conn">→ Feeds into the blended workforce in real time</div>
+</div>
+<div class="tw-col">
+<span class="tw-tag">Liftwork Operations Team</span>
+<h3>The Orchestration Layer</h3>
+<div class="tw-item">Translates client changes into agent skill updates</div>
+<div class="tw-item">Monitors agent + human performance daily</div>
+<div class="tw-item">Manages escalation rules and approval gates</div>
+<div class="tw-item">Continuously shifts the automation boundary</div>
+<div class="tw-item">Surfaces operational intelligence back to client</div>
+<div class="tw-conn">← → Sits between client and workforce</div>
+</div>
+<div class="tw-col">
+<span class="tw-tag">Blended Workforce</span>
+<h3>Agents + Humans as One Team</h3>
+<div class="tw-item">Agent skills handle routine, structured interactions</div>
+<div class="tw-item">Human agents handle judgment, empathy, exceptions</div>
+<div class="tw-item">Seamless handoffs with full context preservation</div>
+<div class="tw-item">Humans train agents through correction signals</div>
+<div class="tw-item">Agents pre-assemble context that makes humans faster</div>
+<div class="tw-conn">← Managed by Liftwork operations</div>
+</div>
+</div>
+</div></section>
+
+<!-- ═══ TEAM TRANSFORMATION ═══ -->
+<section>
+<div class="tag">The Workforce Shift</div>
+<h2 style="margin-top:1.5rem">Same volume. <span class="tt">Fundamentally different team.</span></h2>
+<p class="sub">The people don't disappear — they level up. Routine work shifts to agents, and your human team moves into higher-value roles: exception handling, quality oversight, relationship management, and training the agentic workforce.</p>
+
+<div class="team-compare">
+
+<!-- TODAY -->
+<div class="team-side team-today">
+<div class="team-label">Today's Operation</div>
+<h3>30 agents. Everybody does everything.</h3>
+
+<div class="ppl-legend">
+<div class="ppl-legend-item"><div class="ppl-legend-dot" style="background:var(--coral)"></div>CX Agent</div>
+<div class="ppl-legend-item"><div class="ppl-legend-dot" style="background:var(--amber)"></div>Team Lead</div>
+</div>
+
+<div class="ppl-grid">
+<div class="ppl ppl-lead" title="Team Lead">TL</div>
+<div class="ppl ppl-lead" title="Team Lead">TL</div>
+<div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div>
+<div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div>
+<div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div>
+<div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div><div class="ppl ppl-human">A</div>
+</div>
+
+<div class="time-alloc">
+<div class="time-label">How humans spend their day</div>
+<div class="time-row"><span class="tr-name">Routine tickets</span><div class="time-bar-wrap"><div class="time-bar" style="width:55%;background:var(--coral)">55%</div></div><span class="tr-pct">55%</span></div>
+<div class="time-row"><span class="tr-name">System lookups</span><div class="time-bar-wrap"><div class="time-bar" style="width:20%;background:var(--cl)">20%</div></div><span class="tr-pct">20%</span></div>
+<div class="time-row"><span class="tr-name">Complex issues</span><div class="time-bar-wrap"><div class="time-bar" style="width:12%;background:var(--navy)">12%</div></div><span class="tr-pct">12%</span></div>
+<div class="time-row"><span class="tr-name">Training & QA</span><div class="time-bar-wrap"><div class="time-bar" style="width:8%;background:var(--amber)"></div></div><span class="tr-pct">8%</span></div>
+<div class="time-row"><span class="tr-name">Improvement</span><div class="time-bar-wrap"><div class="time-bar" style="width:5%;background:var(--mgray)"></div></div><span class="tr-pct">5%</span></div>
+</div>
+
+<div class="team-metrics">
+<div class="tm"><div class="tm-num">32</div><div class="tm-label">Total headcount</div></div>
+<div class="tm"><div class="tm-num">15K</div><div class="tm-label">Monthly interactions</div></div>
+<div class="tm"><div class="tm-num">$5.50</div><div class="tm-label">Cost per interaction</div></div>
+</div>
+</div>
+
+<!-- MIDDLE -->
+<div class="team-mid">
+<span style="font-size:.55rem;letter-spacing:.1em;writing-mode:vertical-lr;transform:rotate(180deg)">TRANSFORM</span>
+<div class="tm-arrow">→</div>
+</div>
+
+<!-- TOMORROW -->
+<div class="team-side team-tomorrow">
+<div class="team-label">Liftwork Operation</div>
+<h3>18 humans + 14 agent skills. Each doing what they do best.</h3>
+
+<div class="ppl-legend">
+<div class="ppl-legend-item"><div class="ppl-legend-dot" style="background:var(--navy);border:2px solid var(--tl)"></div>Elevated Human</div>
+<div class="ppl-legend-item"><div class="ppl-legend-dot sq" style="background:var(--teal)"></div>Agent Skill</div>
+<div class="ppl-legend-item"><div class="ppl-legend-dot" style="background:var(--amber)"></div>Liftwork Ops</div>
+</div>
+
+<div class="ppl-grid">
+<div class="ppl ppl-lead" title="Liftwork Ops Lead">LW</div>
+<div class="ppl ppl-lead" title="AI Ops Designer">AI</div>
+<div class="ppl ppl-human-elevated" title="Exception Specialist">ES</div>
+<div class="ppl ppl-human-elevated" title="Exception Specialist">ES</div>
+<div class="ppl ppl-human-elevated" title="Exception Specialist">ES</div>
+<div class="ppl ppl-human-elevated" title="Exception Specialist">ES</div>
+<div class="ppl ppl-human-elevated" title="Exception Specialist">ES</div>
+<div class="ppl ppl-human-elevated" title="Relationship Manager">RM</div>
+<div class="ppl ppl-human-elevated" title="Relationship Manager">RM</div>
+<div class="ppl ppl-human-elevated" title="Relationship Manager">RM</div>
+<div class="ppl ppl-human-elevated" title="Quality Reviewer">QR</div>
+<div class="ppl ppl-human-elevated" title="Quality Reviewer">QR</div>
+<div class="ppl ppl-human-elevated" title="Quality Reviewer">QR</div>
+<div class="ppl ppl-human-elevated" title="Agent Trainer">AT</div>
+<div class="ppl ppl-human-elevated" title="Agent Trainer">AT</div>
+<div class="ppl ppl-human-elevated" title="Knowledge Curator">KC</div>
+<div class="ppl ppl-human-elevated" title="Team Lead">TL</div>
+<div class="ppl ppl-human-elevated" title="Team Lead">TL</div>
+<div class="ppl ppl-agent" title="Returns Triage">🔀</div>
+<div class="ppl ppl-agent" title="Eligibility Check">✓</div>
+<div class="ppl ppl-agent" title="Resolution Exec">⚡</div>
+<div class="ppl ppl-agent" title="Order Lookup">🔍</div>
+<div class="ppl ppl-agent" title="Status Check">📋</div>
+<div class="ppl ppl-agent" title="Label Gen">🏷</div>
+<div class="ppl ppl-agent" title="Billing Agent">💳</div>
+<div class="ppl ppl-agent" title="FAQ Agent">💬</div>
+<div class="ppl ppl-agent" title="Sentiment Monitor">📊</div>
+<div class="ppl ppl-agent" title="Escalation Router">↗</div>
+<div class="ppl ppl-agent" title="Persona Eval">🎭</div>
+<div class="ppl ppl-agent" title="Pattern Detect">🔔</div>
+<div class="ppl ppl-agent" title="Knowledge Retrieval">📚</div>
+<div class="ppl ppl-agent" title="QA Logger">📝</div>
+</div>
+
+<div class="time-alloc">
+<div class="time-label">How humans spend their day</div>
+<div class="time-row"><span class="tr-name">Complex issues</span><div class="time-bar-wrap"><div class="time-bar" style="width:30%;background:var(--navy)">30%</div></div><span class="tr-pct">30%</span></div>
+<div class="time-row"><span class="tr-name">Agent oversight</span><div class="time-bar-wrap"><div class="time-bar" style="width:25%;background:var(--teal)">25%</div></div><span class="tr-pct">25%</span></div>
+<div class="time-row"><span class="tr-name">QA & coaching</span><div class="time-bar-wrap"><div class="time-bar" style="width:20%;background:var(--amber)">20%</div></div><span class="tr-pct">20%</span></div>
+<div class="time-row"><span class="tr-name">Agent training</span><div class="time-bar-wrap"><div class="time-bar" style="width:15%;background:var(--td)">15%</div></div><span class="tr-pct">15%</span></div>
+<div class="time-row"><span class="tr-name">Proactive intel</span><div class="time-bar-wrap"><div class="time-bar" style="width:10%;background:var(--tl)">10%</div></div><span class="tr-pct">10%</span></div>
+</div>
+
+<div class="team-metrics">
+<div class="tm"><div class="tm-num">18+14</div><div class="tm-label">Humans + Agent Skills</div></div>
+<div class="tm"><div class="tm-num">27K</div><div class="tm-label">Monthly interactions</div></div>
+<div class="tm"><div class="tm-num">$2.80</div><div class="tm-label">Cost per interaction</div></div>
+</div>
+</div>
+
+</div>
+
+<div style="margin-top:2rem;padding:1.75rem 2rem;background:var(--white);border-radius:var(--r);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04);display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;text-align:center">
+<div>
+<div style="font-size:.88rem;color:var(--tx2);line-height:1.6"><strong style="color:var(--navy)">Routine work drops from 55% → 0% of human time.</strong> Agents handle it. Humans never touch a password reset again.</div>
+</div>
+<div>
+<div style="font-size:.88rem;color:var(--tx2);line-height:1.6"><strong style="color:var(--navy)">Agent oversight becomes 25% of the job.</strong> Humans review, coach, and improve the agentic workforce — just like managing a team.</div>
+</div>
+<div>
+<div style="font-size:.88rem;color:var(--tx2);line-height:1.6"><strong style="color:var(--navy)">Capacity nearly doubles while headcount drops 44%.</strong> 15K → 27K interactions. 32 → 18 humans. Better economics for everyone.</div>
+</div>
+</div>
+
+</section>
+
+<!-- ═══ THE LIVING OPERATION ═══ -->
+<section>
+<div class="tag">A Living Operation</div>
+<h2 style="margin-top:1.5rem">Month 1 looks nothing like <span class="tt">Month 12.</span></h2>
+<p class="sub">This isn't deploy-and-done. The operation transforms progressively — more deflection, new SLAs, restructured human roles, and continuously improving performance.</p>
+
+<div class="evo">
+<div class="evo-card">
+<div class="evo-when">Month 1–2</div>
+<h3>Diagnose & Shadow</h3>
+<p>Diagnostic maps friction. First agent skills deployed in shadow mode — running alongside humans, measuring but not acting. Baseline performance captured.</p>
+<div class="evo-metrics">
+<div class="evo-m"><span class="eml">Deflection</span><span class="emv">0%</span></div>
+<div class="evo-m"><span class="eml">Agent skills</span><span class="emv">3 (shadow)</span></div>
+<div class="evo-m"><span class="eml">Human team</span><span class="emv">30 agents</span></div>
+</div>
+</div>
+<div class="evo-card">
+<div class="evo-when">Month 3–5</div>
+<h3>First Production</h3>
+<p>Top friction workflows go live. Returns and order status handled by agents with human oversight on exceptions. First measurable efficiency gains.</p>
+<div class="evo-metrics">
+<div class="evo-m"><span class="eml">Deflection</span><span class="emv">20%</span></div>
+<div class="evo-m"><span class="eml">Agent skills</span><span class="emv">6 (live)</span></div>
+<div class="evo-m"><span class="eml">Human team</span><span class="emv">26 agents</span></div>
+</div>
+</div>
+<div class="evo-card">
+<div class="evo-when">Month 6–9</div>
+<h3>Expansion & Specialization</h3>
+<p>Agents expand into billing, product info, account management. Human team restructures — generalists become exception specialists, QA reviewers, relationship managers.</p>
+<div class="evo-metrics">
+<div class="evo-m"><span class="eml">Deflection</span><span class="emv">40%</span></div>
+<div class="evo-m"><span class="eml">Agent skills</span><span class="emv">14 (live)</span></div>
+<div class="evo-m"><span class="eml">Human team</span><span class="emv">20 (specialized)</span></div>
+</div>
+</div>
+<div class="evo-card">
+<div class="evo-when">Month 10–12</div>
+<h3>Operational Intelligence</h3>
+<p>Agents handle majority of volume at higher quality than human baseline. Liftwork team focuses on proactive intelligence — catching product issues, surfacing opportunities, recommending changes.</p>
+<div class="evo-metrics">
+<div class="evo-m"><span class="eml">Deflection</span><span class="emv">55%</span></div>
+<div class="evo-m"><span class="eml">Agent skills</span><span class="emv">22 (live)</span></div>
+<div class="evo-m"><span class="eml">Effective capacity</span><span class="emv">2.8× baseline</span></div>
+</div>
+</div>
+</div>
+
+<!-- NEW SLAs -->
+<div class="sla-grid" style="margin-top:3.5rem">
+<div class="sla-card sla-old">
+<div class="sla-head">Old SLAs — What You Used to Measure</div>
+<div class="sla-body">
+<div class="sla-row"><span class="sl-l">Average Handle Time</span><span class="sl-v">8.2 min</span></div>
+<div class="sla-row"><span class="sl-l">First Contact Resolution</span><span class="sl-v">64%</span></div>
+<div class="sla-row"><span class="sl-l">CSAT</span><span class="sl-v">4.1/5</span></div>
+<div class="sla-row"><span class="sl-l">Tickets per Agent</span><span class="sl-v">500/mo</span></div>
+<div class="sla-row"><span class="sl-l">Cost per Resolution</span><span class="sl-v">$5.50</span></div>
+</div>
+</div>
+<div class="sla-card sla-new">
+<div class="sla-head">◆ Liftwork SLAs — What Matters Now</div>
+<div class="sla-body">
+<div class="sla-row"><span class="sl-l">Autonomous Resolution Rate</span><span class="sl-v">78%</span></div>
+<div class="sla-row"><span class="sl-l">Escalation Accuracy</span><span class="sl-v">96%</span></div>
+<div class="sla-row"><span class="sl-l">Brand Persona Alignment</span><span class="sl-v">94%</span></div>
+<div class="sla-row"><span class="sl-l">Pattern Detection Lead Time</span><span class="sl-v">4.2 hours</span></div>
+<div class="sla-row"><span class="sl-l">Blended CSAT</span><span class="sl-v">4.6/5</span></div>
+<div class="sla-row"><span class="sl-l">Blended Cost per Resolution</span><span class="sl-v">$2.80</span></div>
+<div class="sla-row"><span class="sl-l">Deflection Quality Score</span><span class="sl-v">92%</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ═══ DIAGNOSTIC ═══ -->
+<section id="action" class="fw" style="background:var(--white)"><div class="inner">
+<div class="tag">See It in Action</div>
+<h2 style="margin-top:1.5rem">It starts with a diagnostic.<br><span class="tt">Our first agentic assessment of your operation.</span></h2>
+<p class="sub">We ingest your ticket data, transcripts, and workflows. The output isn't a slide deck — it's a friction map with specific, deployable recommendations.</p>
+<div class="dw">
+<div class="dt"><div class="dots"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div><div class="dtb">Liftwork Diagnostic — Acme Commerce</div><div class="dbd">Live Assessment</div></div>
+<div class="di"><div class="dl">
+<div class="ds">
+<div class="dm"><div class="dml">Tickets / Month</div><div class="dmv">12,400</div></div>
+<div class="dm"><div class="dml">Avg Handle Time</div><div class="dmv">8.2m</div><div class="dmc neg">↑ 1.3m vs benchmark</div></div>
+<div class="dm"><div class="dml">First Contact Resolution</div><div class="dmv">64%</div><div class="dmc neg">↓ 14pts vs target</div></div>
+<div class="dm" style="background:var(--tp);border-color:rgba(26,175,160,.2)"><div class="dml">Automation-Ready</div><div class="dmv" style="color:var(--teal)">47%</div><div class="dmc pos">5,828 tickets/month</div></div>
+</div>
+<div><div class="fh">Friction Score by Workflow</div>
+<div class="fl">
+<div class="fr"><div class="fn">Returns & Exchanges</div><div class="fbw"><div class="fb hi" style="width:87%"></div></div><div class="fs neg">87</div></div>
+<div class="fr"><div class="fn">Order Status Inquiries</div><div class="fbw"><div class="fb hi" style="width:74%"></div></div><div class="fs neg">74</div></div>
+<div class="fr"><div class="fn">Billing & Payment Issues</div><div class="fbw"><div class="fb me" style="width:62%"></div></div><div class="fs neu">62</div></div>
+<div class="fr"><div class="fn">Product Information</div><div class="fbw"><div class="fb me" style="width:51%"></div></div><div class="fs neu">51</div></div>
+<div class="fr"><div class="fn">Account Management</div><div class="fbw"><div class="fb me" style="width:45%"></div></div><div class="fs neu">45</div></div>
+<div class="fr"><div class="fn">VIP & Loyalty</div><div class="fbw"><div class="fb lo" style="width:23%"></div></div><div class="fs pos">23</div></div>
+</div>
+<div class="rb"><div class="rbl">◆ Liftwork Recommendation</div><p><strong>Returns & Exchanges</strong> and <strong>Order Status</strong> account for 52% of volume with the highest friction. Both are ready for agentic transformation. Here's what we design next ↓</p></div>
+</div>
+</div></div>
+</div>
+</div></section>
+
+<!-- ═══ SOLUTION BLUEPRINT ═══ -->
+<section>
+<div class="tag">Phase 02 — Design</div>
+<h2 style="margin-top:1.5rem">From friction finding to <span class="tt">agentic blueprint.</span></h2>
+<p class="sub">The diagnostic told us Returns & Exchanges has a friction score of 87 and accounts for 31% of volume. Here's what Liftwork designs — the specific agents, skills, connectors, and guardrails that become the operating model.</p>
+
+<div style="margin-top:2.5rem;padding:1.15rem 1.5rem;background:var(--cream);border-radius:var(--rs);border:1px solid var(--lgray);display:flex;align-items:center;gap:1rem">
+<div style="font-family:'DM Serif Display',serif;font-size:1.75rem;color:var(--coral);line-height:1">87</div>
+<div><div style="font-weight:700;font-size:.92rem;color:var(--navy)">Returns & Exchanges — Solution Blueprint</div><div style="font-size:.75rem;color:var(--tx3)">4,650 interactions/month · 31% of total volume · Currently 100% human-handled</div></div>
+</div>
+
+<!-- Steps 1 & 2 side by side -->
+<div style="display:grid;grid-template-columns:1fr 1.6fr;gap:1.5rem;margin-top:1.5rem">
+
+<!-- Step 1: Workflow -->
+<div class="bp-sec" style="margin-top:0">
+<h3><span class="bp-tag" style="background:var(--tp);color:var(--td)">Step 1</span> Workflow Decomposition</h3>
+<p>Break into discrete steps. Classify each for the right actor — not "automate everything."</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.5rem">
+<div class="wf-step wf-auto"><div class="wft">AGENTIC</div><div class="wfn">Identify Intent</div></div>
+<div class="wf-step wf-auto"><div class="wft">AGENTIC</div><div class="wfn">Pull Order Data</div></div>
+<div class="wf-step wf-auto"><div class="wft">AGENTIC</div><div class="wfn">Check Policy</div></div>
+<div class="wf-step wf-gate"><div class="wft">GATE</div><div class="wfn">Approve / Route</div></div>
+<div class="wf-step wf-auto"><div class="wft">AGENTIC</div><div class="wfn">Execute Return</div></div>
+<div class="wf-step wf-human"><div class="wft">HUMAN</div><div class="wfn">Exceptions</div></div>
+</div>
+</div>
+
+<!-- Step 2: Agents -->
+<div class="bp-sec" style="margin-top:0">
+<h3><span class="bp-tag" style="background:var(--tp);color:var(--td)">Step 2</span> Domain Agents & Skill Assignment</h3>
+<p>Each step maps to a specific agent skill. Claude handles reasoning and evaluation. Gemini handles high-speed execution and tool calling. The right model for the right job — and we know both at depth.</p>
+<div class="agent-cards">
+<div class="ac"><div class="act">Orchestrator</div><h4>Returns Triage</h4><p>Classifies reason, routes to resolution path.</p><div class="acm">◆ Claude Haiku</div></div>
+<div class="ac"><div class="act">Domain Agent</div><h4>Eligibility Assessor</h4><p>Evaluates return window, checks policy, decides.</p><div class="acm">◆ Claude Sonnet</div></div>
+<div class="ac"><div class="act">Domain Agent</div><h4>Resolution Executor</h4><p>Processes refund, generates label, confirms.</p><div class="acm">◆ Gemini Flash</div></div>
+<div class="ac"><div class="act">Quality Agent</div><h4>Persona Evaluator</h4><p>Checks tone, empathy, brand alignment.</p><div class="acm">◆ Claude Haiku</div></div>
+<div class="ac"><div class="act">Signal Agent</div><h4>Pattern Detector</h4><p>Monitors for product defects, policy gaps.</p><div class="acm">◆ Gemini Flash</div></div>
+<div class="ac"><div class="act">Routing Agent</div><h4>Escalation Router</h4><p>Sentiment detection, context-rich handoff.</p><div class="acm">◆ Claude Haiku</div></div>
+</div>
+</div>
+
+</div>
+
+<!-- Steps 3 & 4 side by side -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+
+<!-- Step 3: Connectors -->
+<div class="bp-sec" style="margin-top:0">
+<h3><span class="bp-tag" style="background:var(--ap);color:var(--amber)">Step 3</span> MCP Integrations & Data Layer</h3>
+<p>Every agent connects to your systems through production-tested MCP servers — Anthropic's standard protocol for agent-to-tool communication. Your data unifies in Snowflake.</p>
+<div class="conn-row">
+<div class="conn"><div class="conn-i" style="background:#5E3B9E">S</div>Shopify MCP</div>
+<div class="conn"><div class="conn-i" style="background:#03363D">Z</div>Zendesk MCP</div>
+<div class="conn"><div class="conn-i" style="background:#FF6600">S</div>Shippo MCP</div>
+<div class="conn"><div class="conn-i" style="background:#635BFF">St</div>Stripe MCP</div>
+<div class="conn"><div class="conn-i" style="background:#29B6F6">❄</div>Snowflake</div>
+<div class="conn"><div class="conn-i" style="background:#FF9900">A</div>AWS</div>
+</div>
+<div style="margin-top:.85rem;font-size:.78rem;color:var(--tx3);line-height:1.55">Every CX system integration is built as a <strong style="color:var(--tx2)">reusable MCP server</strong> — production-tested, version-controlled, deployable across clients. Operational data flows through <strong style="color:var(--tx2)">Snowflake</strong> as the unified context layer. Infrastructure runs on <strong style="color:var(--tx2)">AWS</strong>.</div>
+</div>
+
+<!-- Step 4: Guardrails -->
+<div class="bp-sec" style="margin-top:0">
+<h3><span class="bp-tag" style="background:var(--cp);color:var(--coral)">Step 4</span> Guardrails & Governance</h3>
+<p>Explicit boundaries — what agents can do alone, what needs approval, what always goes to a human.</p>
+<div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+<div class="gr gate" style="margin:0"><span class="grl">⚡ Gate</span>Refunds over $150 → human confirmation</div>
+<div class="gr gate" style="margin:0"><span class="grl">⚡ Gate</span>Out-of-stock → human for alternatives</div>
+<div class="gr esc" style="margin:0"><span class="grl">↗ Escalation</span>Sentiment drop → warm transfer with context</div>
+<div class="gr esc" style="margin:0"><span class="grl">↗ Escalation</span>3+ returns in 90 days → relationship review</div>
+<div class="gr gate" style="margin:0"><span class="grl">⚡ Quality</span>Below 85% persona alignment → rewrite</div>
+<div class="gr esc" style="margin:0"><span class="grl">↗ Signal</span>3+ returns same SKU → product QA flag</div>
+</div>
+</div>
+
+</div>
+
+<!-- Tech stack + Bridge -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1.5rem">
+<div style="padding:1.75rem;border-radius:var(--r);background:var(--white);box-shadow:var(--ss);border:1px solid rgba(0,0,0,.04)">
+<div class="card-t">Purpose-Built Technology Stack</div>
+<p style="font-size:.85rem;color:var(--tx2);line-height:1.65;margin-bottom:1.25rem">We don't try to be experts in everything. We go deep on the platforms that matter most for CX operations — and build production-tested integrations you can trust.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem">
+<div style="padding:.75rem;border-radius:var(--rs);background:var(--tp);border:1px solid rgba(26,175,160,.15)">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:var(--td);font-weight:600;margin-bottom:.25rem">AI — Primary</div>
+<div style="font-weight:700;font-size:.88rem;color:var(--navy)">Anthropic Claude</div>
+<div style="font-size:.7rem;color:var(--tx3);margin-top:.15rem">Orchestration, reasoning, evaluation, persona alignment</div>
+</div>
+<div style="padding:.75rem;border-radius:var(--rs);background:rgba(66,133,244,.06);border:1px solid rgba(66,133,244,.12)">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:#4285F4;font-weight:600;margin-bottom:.25rem">AI — Execution</div>
+<div style="font-weight:700;font-size:.88rem;color:var(--navy)">Google Gemini</div>
+<div style="font-size:.7rem;color:var(--tx3);margin-top:.15rem">High-speed tool calling, classification, real-time routing</div>
+</div>
+<div style="padding:.75rem;border-radius:var(--rs);background:rgba(255,153,0,.06);border:1px solid rgba(255,153,0,.12)">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:#FF9900;font-weight:600;margin-bottom:.25rem">Cloud — Primary</div>
+<div style="font-weight:700;font-size:.88rem;color:var(--navy)">AWS</div>
+<div style="font-size:.7rem;color:var(--tx3);margin-top:.15rem">Infrastructure, compute, where your CX tools already live</div>
+</div>
+<div style="padding:.75rem;border-radius:var(--rs);background:rgba(41,182,246,.06);border:1px solid rgba(41,182,246,.12)">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.08em;color:#29B6F6;font-weight:600;margin-bottom:.25rem">Data Platform</div>
+<div style="font-weight:700;font-size:.88rem;color:var(--navy)">Snowflake</div>
+<div style="font-size:.7rem;color:var(--tx3);margin-top:.15rem">Unified CX data layer, operational analytics, agent context</div>
+</div>
+</div>
+<div style="margin-top:1rem;padding:.85rem;border-radius:var(--rs);background:var(--cream);border:1px solid var(--lgray)">
+<div style="font-size:.78rem;color:var(--tx2);line-height:1.55"><strong style="color:var(--navy)">MCP-native by design.</strong> Every CX system integration — Zendesk, Shopify, Gorgias, Intercom, Stripe — is built as a production-tested MCP server. Anthropic's Model Context Protocol is our standard for how agents connect to your tools.</div>
+</div>
+</div>
+<div class="bp-bridge" style="margin:0">
+<div class="bb-icon">→</div>
+<p><strong>This is the design. Now who runs it?</strong> Every element needs monitoring, tuning, and continuous improvement. Policies change. Agents drift. That's where the operating model comes in — the thing that separates Liftwork from anyone who designs and walks away.</p>
+</div>
+</div>
+
+</section>
+
+<!-- ═══ SYNTHETIC STUDIO ═══ -->
+<section class="fw" style="background:var(--white)"><div class="inner">
+<div class="tag">Phase 03 — Validate</div>
+<h2 style="margin-top:1.5rem">Train your agents at scale. <span class="tt">Before they touch a real customer.</span></h2>
+<p class="sub">The Synthetic Studio generates hundreds of realistic customer personas from your data and runs them against your agent skills simultaneously — testing strategies, measuring outcomes, and optimizing in hours, not months.</p>
+
+<div class="syn-wrap">
+<div class="syn-header">
+<h3>Synthetic Studio — Live Simulation</h3>
+<div class="syn-badge">Churn Prevention · Subscription Product</div>
+</div>
+<div class="syn-body" id="synStudio">
+
+<!-- Problem -->
+<div class="syn-problem">
+<div class="sp-icon">📉</div>
+<div style="flex:1">
+<div style="font-weight:700;font-size:.92rem;color:var(--navy)">Business Problem: Monthly churn increased from 4.2% to 6.8%</div>
+<div style="font-size:.75rem;color:var(--tx2);margin-top:.15rem">Subscriber cancellation rate has spiked 62% in 60 days. Current retention flow uses discount-first strategy with a 34% save rate. We need to find what works — fast.</div>
+</div>
+</div>
+
+<!-- Mission -->
+<div class="syn-mission">
+<div style="width:42px;height:42px;border-radius:10px;background:var(--gt);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">🎯</div>
+<div style="flex:1">
+<div style="font-family:'JetBrains Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);font-weight:600">Mission Loaded</div>
+<div style="font-weight:700;font-size:.88rem;color:var(--navy);margin-top:.1rem">Test 3 retention strategies across 500 synthetic subscribers simultaneously</div>
+<div style="font-size:.7rem;color:var(--tx3);margin-top:.1rem">Strategy A: Discount-first · Strategy B: Empathy + flex plan · Strategy C: Value demonstration</div>
+</div>
+<div id="simStatus" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.35rem .85rem;border-radius:50px;font-weight:600;background:rgba(52,199,123,.1);color:var(--green)">● Running</div>
+</div>
+
+<!-- Simulation Engine -->
+<div style="text-align:center;margin-bottom:1.5rem">
+<button id="simBtn" onclick="runSimulation()" style="background:linear-gradient(135deg,#1AAFA0,#5CDECE);color:white;border:none;padding:1rem 2.5rem;border-radius:50px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;box-shadow:0 8px 30px rgba(26,175,160,.25);transition:all .2s;letter-spacing:.02em">▶ Run Simulation — 500 Subscribers × 3 Strategies</button>
+<div id="simCounter" style="font-family:'JetBrains Mono',monospace;font-size:2.25rem;font-weight:700;background:linear-gradient(135deg,#1AAFA0,#5CDECE);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:1rem;display:none"><span id="simCount">0</span> / 500</div>
+<div id="simCountLabel" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#8A8F97;text-transform:uppercase;letter-spacing:.1em;display:none">Conversations Processed</div>
+</div>
+
+<!-- Grid -->
+<div class="sim-grid" id="simGrid"></div>
+
+<!-- Metrics (hidden until complete) -->
+<div id="simMetrics" style="display:none">
+<div class="sim-met-row">
+<div class="sim-mc"><div class="smc-l">Save Rate</div><div class="smc-v" id="metSave" style="color:#1AAFA0">—</div><div class="smc-c" id="metSaveC" style="color:#8A8F97">Waiting...</div><div class="sim-bar-w"><div class="sim-bar" id="barSave" style="width:0%;background:linear-gradient(135deg,#1AAFA0,#5CDECE)"></div></div></div>
+<div class="sim-mc"><div class="smc-l">Avg Sentiment</div><div class="smc-v" id="metSent" style="color:#1AAFA0">—</div><div class="smc-c" id="metSentC" style="color:#8A8F97">Waiting...</div><div class="sim-bar-w"><div class="sim-bar" id="barSent" style="width:0%;background:linear-gradient(135deg,#1AAFA0,#5CDECE)"></div></div></div>
+<div class="sim-mc"><div class="smc-l">Avg Discount Cost</div><div class="smc-v" id="metCost" style="color:#34C77B">—</div><div class="smc-c" id="metCostC" style="color:#8A8F97">Waiting...</div><div class="sim-bar-w"><div class="sim-bar" id="barCost" style="width:0%;background:#34C77B"></div></div></div>
+<div class="sim-mc"><div class="smc-l">→ Human Escalation</div><div class="smc-v" style="color:#1C2B3A">—</div><div class="smc-c" style="color:#8A8F97">Waiting...</div><div class="sim-bar-w"><div class="sim-bar" style="width:0%;background:#F5A623"></div></div></div>
+</div>
+
+<!-- Strategy Results -->
+<div class="strat-results" id="simStrats" style="opacity:0;transition:opacity .8s">
+<div class="strat-card" style="background:#FFF0EE;border:1px solid rgba(255,107,91,.12)">
+<h4><span class="sd" style="background:#FF6B5B"></span> Strategy A: Discount-First</h4>
+<p>Lead with offers. High cost, low sentiment. Customers feel transactional, not valued.</p>
+<div class="sc-r" style="color:#FF6B5B">34% save · $18/save</div>
+</div>
+<div class="strat-card" style="background:#FFF7E6;border:1px solid rgba(245,166,35,.12)">
+<h4><span class="sd" style="background:#F5A623"></span> Strategy B: Empathy + Flex</h4>
+<p>Acknowledge frustration, offer plan downgrade. Better sentiment, moderate saves.</p>
+<div class="sc-r" style="color:#F5A623">48% save · $6/save</div>
+</div>
+<div class="strat-card" style="background:#E6F9F6;border:1px solid rgba(26,175,160,.12)">
+<h4><span class="sd" style="background:#1AAFA0"></span> Strategy C: Value Demo ✓</h4>
+<p>Show unused features, personalize value prop. Highest saves, highest sentiment, near-zero cost.</p>
+<div class="sc-r" style="color:#1AAFA0">67% save · $0.40/save</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div style="margin-top:2rem;padding:2rem 2.5rem;background:#1C2B3A;border-radius:16px;color:white;display:flex;gap:2rem;align-items:center">
+<div style="font-size:2rem;flex-shrink:0">→</div>
+<div>
+<p style="font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.75);margin:0"><strong style="color:white">500 conversations. 3 strategies. 1 winner — found in hours, not months.</strong> Strategy C doubled the save rate at near-zero cost by demonstrating value instead of discounting it. That skill is now validated, tuned, and ready for production. Watch it handle a real customer next ↓</p>
+</div>
+</div>
+
+</div></section>
+
+<!-- ═══ CONVERSATION ═══ -->
+<section>
+<div class="tag">The Operating Model — Live</div>
+<h2 style="margin-top:1.5rem">This is what it looks like <span class="tt">when it's running.</span></h2>
+<p class="sub">Not a chatbot. A managed operation — agents and humans working as one team, with Liftwork orchestrating every interaction.</p>
+<div class="dw">
+<div class="dt"><div class="dots"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div></div><div class="dtb">Ticket #48291 — Returns & Exchange</div><div class="dbd">Agentic + Human</div></div>
+<div class="di"><div class="clx">
+<div class="cw"><div class="ctop"><div class="cn">Sarah M. — Chat</div><div class="clv">Liftwork Active</div></div>
+<div class="cms">
+<div class="m m-c"><span class="mw">Customer</span>Hi, I received my order yesterday but the color is completely different from what was shown on the website. I ordered the "Sage Green" throw blanket and this is clearly grey. Really disappointed.</div>
+<div class="m m-s">◆ Skill: Return Eligibility Assessor · Order #AC-29471 · Within 30-day window</div>
+<div class="m m-a"><span class="mw">Liftwork Agent</span>I completely understand your frustration, Sarah — that's not the experience we want for you. I've confirmed you're within our return window. Would you prefer a full refund, or would you like us to send the correct Sage Green? We have it in stock.</div>
+<div class="m m-c"><span class="mw">Customer</span>I want the right one but I'm worried the same thing will happen again. Is this a known issue?</div>
+<div class="m m-s">◆ Sentiment: trust concern · Pattern: 3 similar on SKU-TH-4421 in 14 days<br>◆ Routing to human — quality pattern, not routine return</div>
+<div class="m m-h"><span class="mw">Human Agent — Maria K.</span>Sarah, I'm Maria — picking up because you're raising something important. I can see we've had similar reports on this batch. I'll arrange a replacement from our newest production run, which QA has verified, and include a prepaid return label. If it's still not right, I'll personally sort it out.</div>
+<div class="m m-c"><span class="mw">Customer</span>That's really helpful, thank you Maria.</div>
+<div class="m m-s">◆ Label generated · Replacement #AC-31205 · QA flag on SKU-TH-4421 · CSAT: 4.7</div>
+</div></div>
+<div class="csd">
+<div class="sp"><h4>Skills Deployed</h4><div style="display:flex;flex-wrap:wrap;gap:.2rem"><span class="pill">Return Eligibility</span><span class="pill">Sentiment Monitor</span><span class="pill">Knowledge Retrieval</span><span class="pill">Escalation Router</span><span class="pill">Label Generator</span></div></div>
+<div class="sp"><h4>Resolution</h4><div class="spr"><span class="spl">Total Handle</span><span class="spv pos">3m 12s</span></div><div class="spr"><span class="spl">AI Portion</span><span class="spv">1m 24s</span></div><div class="spr"><span class="spl">Human Portion</span><span class="spv">1m 48s</span></div><div class="spr"><span class="spl">CSAT</span><span class="spv pos">4.7/5</span></div></div>
+<div class="sp"><h4>Persona</h4><div class="spr"><span class="spl">Voice</span><span class="spv">Warm, Direct</span></div><div class="spr"><span class="spl">Alignment</span><span class="spv pos">94%</span></div></div>
+<div class="sp" style="background:var(--ap);border-color:rgba(245,166,35,.2)"><h4 style="color:var(--amber)">⚠ Operational Signal</h4><p style="font-size:.75rem;color:var(--tx2);line-height:1.5;margin:0">3 color complaints on SKU-TH-4421 in 14 days. Flagged to QA. <strong>This insight came from the operation, not a survey.</strong></p></div>
+</div>
+</div></div>
+</div>
+</section>
+
+<!-- ═══ QUOTE ═══ -->
+<section class="fw" style="background:var(--white);padding-top:3rem;padding-bottom:3rem"><div class="inner">
+<div class="qw">
+<div class="qt">"The goal isn't to replace humans or merely assist them — it's to create complementary working relationships where the combined output exceeds what either could achieve alone."</div>
+<div class="qa">— Deloitte, State of AI in the Enterprise 2026</div>
+</div>
+</div></section>
+
+<!-- ═══ RESULTS ═══ -->
+<section>
+<div class="tag">Measured Outcomes</div>
+<h2 style="margin-top:1.5rem">What the operating model delivers.</h2>
+<div class="rr">
+<div class="re"><div class="ren">47%</div><div class="rel">Reduction in cost per resolution</div><div class="res">Median across accounts</div></div>
+<div class="re"><div class="ren">3.2×</div><div class="rel">Increase in effective capacity</div><div class="res">Same team, more throughput</div></div>
+<div class="re"><div class="ren">78%</div><div class="rel">Tier-1 autonomous resolution</div><div class="res">With human oversight</div></div>
+<div class="re"><div class="ren">4.6</div><div class="rel">CSAT on blended interactions</div><div class="res">Higher than human-only</div></div>
+</div>
+</section>
+
+<!-- ═══ WHO THIS IS FOR ═══ -->
+<section class="fw" style="background:var(--white)"><div class="inner">
+<div class="tag">Who Liftwork Is For</div>
+<h2 style="margin-top:1.5rem">Three kinds of companies. <span class="tt">One operating model.</span></h2>
+<p class="sub">Whether you're scaling fast, already outsourcing, or sitting on agents that aren't delivering — the gap is the same: you need someone who designs, deploys, and runs the blended operation. Not advises. Not builds and leaves. Runs.</p>
+
+<div class="ep-grid">
+
+<div class="ep">
+<div class="ep-label">Scaling Companies</div>
+<h3>"We're growing 40% a year and our CX operation is breaking."</h3>
+<p>You're a $50M-$500M company. Your ticket volume is climbing, your per-ticket cost is going the wrong direction, and every new channel or market you enter adds linear complexity. You've been pitched AI by every vendor you use, but nobody's shown you how to actually redesign the operation around it. You need one partner who brings the whole picture — design, deployment, and ongoing management.</p>
+<div class="ep-signals">
+<div class="ep-sig-label">You recognize these signals</div>
+<div class="ep-sig">Cost per resolution climbing despite adding headcount</div>
+<div class="ep-sig">CSAT flat even with new tools and training investments</div>
+<div class="ep-sig">Best agents spending 60% of their time on routine work</div>
+<div class="ep-sig">AI features purchased but never properly configured</div>
+</div>
+<div class="ep-bottom">Liftwork entry: Full diagnostic → design → managed operation</div>
+</div>
+
+<div class="ep">
+<div class="ep-label">Companies Already Outsourcing</div>
+<h3>"Our BPO gives us bodies and dashboards. We need a transformation partner."</h3>
+<p>You already outsource CX — and it works for staffing. But your board is asking about AI, your CFO wants to see cost curves bend, and your current BPO's answer is "we added a chatbot." You need your outsourcing partner to bring an agentic operating model — not just labor arbitrage. You need the humans <em>and</em> the agents, managed as one workforce, with measurable deflection and improving economics.</p>
+<div class="ep-signals">
+<div class="ep-sig-label">You recognize these signals</div>
+<div class="ep-sig">Board asking "what's our AI strategy for CX?" and you don't have a good answer</div>
+<div class="ep-sig">BPO contract renewals becoming harder to justify at current cost</div>
+<div class="ep-sig">Competitors' CX operations are getting faster and cheaper</div>
+<div class="ep-sig">Your BPO talks about AI in pitch decks but not in your daily operation</div>
+</div>
+<div class="ep-bottom">Liftwork entry: Transform existing outsourced operation in place</div>
+</div>
+
+<div class="ep">
+<div class="ep-label">Companies Stuck in Pilot Purgatory</div>
+<h3>"We built the agents. They work in demos. They're failing in production."</h3>
+<p>Your engineering team built custom agents, or you bought AgentForce, or you deployed AI through your CX platform. The technology works. But six months in, the agents are drifting, nobody's monitoring quality, the governance is ad hoc, and your engineering team has moved on to other priorities. You don't need someone to rebuild the agents — you need someone to <strong>operationalize what you've already built.</strong></p>
+<div class="ep-signals">
+<div class="ep-sig-label">You recognize these signals</div>
+<div class="ep-sig">Agents deployed but no one owns ongoing performance management</div>
+<div class="ep-sig">Inconsistent behavior across workflows and channels</div>
+<div class="ep-sig">Engineering built it, but operations doesn't know how to run it</div>
+<div class="ep-sig">AI investment made, ROI not materializing</div>
+</div>
+<div class="ep-bottom">Liftwork entry: Take over agent operations → stabilize → expand</div>
+</div>
+
+</div>
+
+<div style="margin-top:2.5rem;padding:2rem;background:var(--cream);border-radius:var(--r);border:1px solid var(--lgray);text-align:center">
+<p style="font-size:1rem;color:var(--tx2);line-height:1.75;max-width:760px;margin:0 auto"><strong style="color:var(--navy)">The common thread:</strong> every one of these companies needs the same thing — a partner who can design agentic workflows, deploy them alongside humans, and manage the blended operation as a living system that gets better every month. That's one partner. One relationship. One operating model. That's Liftwork.</p>
+</div>
+
+</div></section>
+
+<!-- ═══ ENGAGEMENT ═══ -->
+<section id="engage" class="fw" style="background:var(--white)"><div class="inner">
+<div class="tag">Working Together</div>
+<h2 style="margin-top:1.5rem">How an engagement <span class="tt">actually works.</span></h2>
+<p class="sub">Not a consulting project. A deployment methodology designed to reach production in weeks — and then keep getting better every month.</p>
+<div class="er2">
+<div class="en"><div class="enp">Phase 1</div><h3>Diagnose & Design</h3><div class="ent">◇ Weeks 1–3</div><p>AI-powered assessment of your operation. Friction map, agent skill composition plan, human-agent boundary design, and ROI model — all grounded in your actual data.</p><div class="end"><div class="edh">Deliverables</div><div class="edi">Operational friction heat map</div><div class="edi">Agent skill blueprint (Claude + Gemini)</div><div class="edi">Human role redesign plan</div><div class="edi">Governance & guardrail framework</div></div></div>
+<div class="en"><div class="enp">Phase 2</div><h3>Deploy & Calibrate</h3><div class="ent">◇ Weeks 3–8</div><p>Agent skills deployed in shadow mode, validated against synthetic personas, then progressively moved to production. Human team begins restructuring into specialized roles.</p><div class="end"><div class="edh">Deliverables</div><div class="edi">Synthetic validation report</div><div class="edi">Production-deployed workflows</div><div class="edi">Brand persona configuration</div><div class="edi">New SLA framework</div></div></div>
+<div class="en"><div class="enp">Phase 3</div><h3>Operate & Expand</h3><div class="ent">◇ Ongoing</div><p>Managed operation of the blended workforce. Continuous skill refinement, capability expansion, and proactive intelligence. This is the phase that never ends — and the one that creates compounding value.</p><div class="end"><div class="edh">Deliverables</div><div class="edi">Weekly operational review</div><div class="edi">Monthly intelligence report</div><div class="edi">Continuous automation expansion</div><div class="edi">Workforce transformation support</div></div></div>
+</div>
+</div></section>
+
+<!-- ═══ CTA ═══ -->
+<div class="ctaw" id="cta">
+<h2>Ready to see your operation<br><span style="color:var(--tl)">redesigned?</span></h2>
+<div class="cs">Start with a diagnostic. We'll map your operational friction, identify where agents can perform, where humans matter most — and show you what the operating model looks like when all three work together.</div>
+<a href="/cdn-cgi/l/email-protection#c0a8a5acacaf80aca9a6b4b7afb2abeea1a9" class="bp">Start the Diagnostic →</a>
+</div>
+
+<footer><div><img src="https://i.imgur.com/csknqIs.png" alt="Liftwork" style="display:block;margin-bottom:.35rem"/><div class="ft">AI-Powered CX Operations</div></div><div class="ft">Design the agents. Run the operation. Continuously improve.</div></footer>
+
+<script>
+const PERSONAS = [
+  {av:'😤',nm:'Marcus T.',desc:'Price-sensitive · 3mo',strat:'a',outcome:'lost',msgs:[
+    {who:'c',text:"I want to cancel my subscription. It's just too expensive for what I'm getting."},
+    {who:'s',text:"◆ Strategy A selected · 3mo tenure · Price objection"},
+    {who:'a',text:"I understand budget matters. We'd hate to lose you — how about 40% off for the next 3 months?"},
+    {who:'c',text:"It's not just the price honestly. I'm not sure I even use it enough."},
+    {who:'a',text:"I hear you. We could also add our premium tier free for a month so you can see the full value?"},
+    {who:'c',text:"No thanks. Just process the cancellation please."},
+    {who:'s',text:"◆ Outcome: Lost · Discount rejected · Customer felt pressured, not understood"}
+  ]},
+  {av:'👩‍💼',nm:'Sarah K.',desc:'Power user · 18mo',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I've been looking at [Competitor] and honestly their pricing is more competitive."},
+    {who:'s',text:"◆ Strategy C selected · 18mo tenure · Competitor mention · High usage"},
+    {who:'a',text:"I appreciate you being upfront about that, Sarah. Can I ask — which features are most important to you day-to-day?"},
+    {who:'c',text:"Mainly the analytics dashboard and the team collaboration tools."},
+    {who:'a',text:"Good news — I checked and [Competitor] doesn't offer real-time team sync or custom report builders, which you use weekly. You'd actually lose two of your most-used capabilities."},
+    {who:'c',text:"Wait, they don't have the real-time sync? That's actually a dealbreaker for my team."},
+    {who:'a',text:"Exactly. And based on your usage, you're getting about $340/mo in value from features they can't match. Happy to walk through the comparison if helpful."},
+    {who:'c',text:"No, that's actually really good to know. I'll stay."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · No discount needed · Value clarity drove retention"}
+  ]},
+  {av:'😐',nm:'James R.',desc:'Declining usage · 6mo',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I'd like to cancel. I just don't use it enough to justify the monthly cost anymore."},
+    {who:'s',text:"◆ Strategy C selected · Usage dropped 60% · 3 features never activated"},
+    {who:'a',text:"That's fair feedback, James. Before we process that — I noticed you've primarily been using the basic features. There are 3 capabilities included in your plan that most users in your situation find transform how they use the product."},
+    {who:'c',text:"I mean, I could look, but I'm not interested in paying more for anything."},
+    {who:'a',text:"No extra cost — they're already included. You're paying for them today. I think the issue might be discoverability, not value. Want me to show you the personalized dashboard? Takes 30 seconds."},
+    {who:'c',text:"Sure, go ahead."},
+    {who:'a',text:"Done — check your app now. Most users say this single feature changes how they use the product entirely. I've also queued up a 2-minute walkthrough for the workflow automator."},
+    {who:'c',text:"Oh wow, I didn't know this existed. OK let me try this for a couple weeks."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · 14-day retention window · Feature activation triggered"}
+  ]},
+  {av:'🌍',nm:'Priya M.',desc:'Billing issue · 1mo',strat:'b',outcome:'escalated',msgs:[
+    {who:'c',text:"I was charged twice this month and now I want to cancel. This is unacceptable."},
+    {who:'s',text:"◆ Strategy B selected · Billing dispute · 1mo tenure · Elevated frustration"},
+    {who:'a',text:"I'm really sorry about the double charge, Priya. That shouldn't have happened and I can see exactly what went wrong. Let me fix this right now — I'll process the refund for the duplicate immediately."},
+    {who:'c',text:"How do I know this won't happen again?"},
+    {who:'a',text:"Completely valid concern. I've flagged your account for billing review and added a protection note. If you'd like, I can also connect you with our billing specialist who can walk you through what happened."},
+    {who:'c',text:"Yes, I want to speak to a real person about this actually."},
+    {who:'s',text:"◆ Outcome: Escalated → Billing specialist · Refund processed · Trust repair needed"}
+  ]},
+  {av:'👨‍👧',nm:'David L.',desc:'Family plan · 24mo',strat:'b',outcome:'saved',msgs:[
+    {who:'c',text:"We need to cut costs at home. Canceling several subscriptions and this is one of them."},
+    {who:'s',text:"◆ Strategy B selected · 24mo loyal customer · Family plan · Budget pressure"},
+    {who:'a',text:"I completely understand, David. After 2 years with us, I want to make sure we explore every option before you go. Would a smaller plan work for your family?"},
+    {who:'c',text:"Maybe, but I don't even know what's available. We're on the family premium."},
+    {who:'a',text:"There's a Family Essential plan at $14.99 — that's 40% less than what you're paying now. You keep all the core features your family uses. The main difference is storage limits, and looking at your usage, you're well within the Essential tier."},
+    {who:'c',text:"$14.99? That's actually fine. We just couldn't justify $24.99 anymore."},
+    {who:'a',text:"Done — I've switched you over effective today, and the price difference will be credited to your next bill. No interruption to your family's accounts."},
+    {who:'c',text:"Perfect, thank you. That was much easier than I expected."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · Plan downgrade · Revenue retained at lower tier · High satisfaction"}
+  ]},
+  {av:'💼',nm:'Ana S.',desc:'Business · Competitor offer',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I received a pitch from [Competitor] that's 30% cheaper. I need to justify our tools budget to my CFO."},
+    {who:'s',text:"◆ Strategy C selected · Business account · 12mo · Competitor price pressure"},
+    {who:'a',text:"That's smart due diligence, Ana. Can I help you build that justification? I can pull your team's actual usage data and ROI metrics for the last quarter."},
+    {who:'c',text:"That would actually be really useful. My CFO wants numbers."},
+    {who:'a',text:"Here's what I see: your team ran 847 automated workflows last month that saved an estimated 62 hours. At your team's blended rate, that's roughly $9,300 in productivity value from a $499 subscription. [Competitor] doesn't offer workflow automation."},
+    {who:'c',text:"I didn't have those numbers. Can you send that as a report I can share?"},
+    {who:'a',text:"Sending now — it's a one-page ROI summary branded for your internal review. I've also included a feature-by-feature comparison with [Competitor] so your CFO has the full picture."},
+    {who:'c',text:"This is great. I think this actually makes the case to stay. Thank you."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · No discount · Provided CFO-ready ROI justification"}
+  ]},
+  {av:'👴',nm:'Robert H.',desc:'Moving · Life change',strat:'a',outcome:'lost',msgs:[
+    {who:'c',text:"I'm moving abroad next month and won't need this service anymore."},
+    {who:'s',text:"◆ Strategy A selected · 8mo tenure · Life change · Non-negotiable"},
+    {who:'a',text:"We're sorry to hear that, Robert. Would 50% off for 3 months help during your transition?"},
+    {who:'c',text:"No, I literally will not be able to use it where I'm going. Just cancel it."},
+    {who:'a',text:"I understand. We could also pause your account for up to 6 months at no charge if there's a chance you'd return?"},
+    {who:'c',text:"Appreciate it, but no. Please just process the cancellation."},
+    {who:'s',text:"◆ Outcome: Lost · Life change — no strategy effective · Discount irrelevant to situation"}
+  ]},
+  {av:'👩‍🎓',nm:'Lisa Chen',desc:'Confused user · 4mo',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I want to cancel. The app is way too confusing and I can never find what I need."},
+    {who:'s',text:"◆ Strategy C selected · 4mo tenure · Low feature adoption · UX frustration"},
+    {who:'a',text:"I'm sorry it's been frustrating, Lisa. A lot of users feel that way at first — the default layout isn't great for everyone. Can I try something? I'll set up your personalized dashboard right now. Takes 30 seconds and it puts everything you actually use front and center."},
+    {who:'c',text:"I guess, but I've already kind of given up on it."},
+    {who:'a',text:"Done — open the app and tell me what you see now."},
+    {who:'c',text:"Oh... that's completely different. Why wasn't it like this from the start?"},
+    {who:'a',text:"Great question, and honestly, that's feedback we're working on. I've also turned on smart suggestions so the app learns what you use most. Give it a week — I think you'll see a totally different experience."},
+    {who:'c',text:"OK fine, I'll give it another shot. But if it's still confusing I'm out."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · Personalization activated · UX barrier removed · 7-day check-in scheduled"}
+  ]},
+  {av:'🏋️',nm:'Tom W.',desc:'Low usage · 9mo',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I'm barely using this anymore. Not worth the monthly fee."},
+    {who:'s',text:"◆ Strategy C selected · 9mo tenure · Usage declining 3 months"},
+    {who:'a',text:"I appreciate the honesty, Tom. Looking at your profile, it seems like your goals when you signed up were around [fitness tracking]. Is that still what you're focused on?"},
+    {who:'c',text:"Yeah but I kind of stopped tracking after the first few months."},
+    {who:'a',text:"That's really common actually. Here's what I'd suggest — we just launched AI-powered goal coaching that auto-adjusts your plan based on your schedule. Most users who activated it saw 3x more engagement within 2 weeks. Want me to set it up?"},
+    {who:'c',text:"Is that included or is it extra?"},
+    {who:'a',text:"Completely included. I'll activate it now and set a gentle daily reminder at whatever time works for you. If you're still not using it after 2 weeks, I'll personally reach out and we can revisit."},
+    {who:'c',text:"Alright, let's try it. Set the reminder for 7am."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · Feature activation · Coaching enabled · 14-day checkpoint set"}
+  ]},
+  {av:'😡',nm:'Karen F.',desc:'Repeat issue · Angry',strat:'b',outcome:'escalated',msgs:[
+    {who:'c',text:"This is the THIRD time I've had this problem. I am DONE. Cancel my account immediately."},
+    {who:'s',text:"◆ Strategy B selected · High frustration · 3 prior complaints · Churn risk: critical"},
+    {who:'a',text:"Karen, I can see your history and you're absolutely right to be frustrated. Three times is unacceptable and I'm sorry. I don't want to ask you to explain it again — I have the full context here."},
+    {who:'c',text:"Then you know this keeps happening and nobody fixes it."},
+    {who:'a',text:"You're right. This needs someone with authority to resolve it permanently, not just patch it. I'm connecting you with our senior resolution team right now — I've attached your full case history so you won't have to repeat anything."},
+    {who:'c',text:"Fine. But this is the last chance."},
+    {who:'s',text:"◆ Outcome: Escalated → Senior team · Full context transferred · Retention depends on resolution quality"}
+  ]},
+  {av:'🧑‍💻',nm:'Mike P.',desc:'Free alternative found',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I found a free tool that does most of what I need. Going to switch."},
+    {who:'s',text:"◆ Strategy C selected · 7mo tenure · Free competitor · Moderate usage"},
+    {who:'a',text:"That makes sense, Mike — there are some solid free options out there. Out of curiosity, which tool are you looking at? I want to make sure you're not losing anything critical."},
+    {who:'c',text:"[Free Tool]. It covers the basics I use."},
+    {who:'a',text:"It does cover basics well. Two things it doesn't have that you use regularly: the API integrations with your other tools (you have 4 active), and the version history on your projects. Both would mean manual workarounds. Just want to make sure that's a tradeoff you're OK with."},
+    {who:'c',text:"I didn't think about the API connections. That would actually be a pain to lose."},
+    {who:'a',text:"If cost is the main driver, we have a builder tier at $8/mo that keeps all your integrations. That's less than the time you'd spend on manual workarounds."},
+    {who:'c',text:"$8 is fine actually. Switch me to that."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · Tier downgrade · Integration lock-in identified · Revenue retained"}
+  ]},
+  {av:'👶',nm:'Emma J.',desc:'Goal completed · 2mo',strat:'c',outcome:'saved',msgs:[
+    {who:'c',text:"I only signed up for one specific thing and I've finished it. Don't need it anymore."},
+    {who:'s',text:"◆ Strategy C selected · 2mo tenure · Goal completion · Single use-case"},
+    {who:'a',text:"Congratulations on finishing that! What was the project, if you don't mind me asking?"},
+    {who:'c',text:"I used it to plan and launch my online store. That's done now."},
+    {who:'a',text:"Nice — launching a store is a big milestone. Now that you're live, most store owners find the next phase is actually where tools like ours become more valuable, not less — things like analytics tracking, A/B testing your product pages, and automated customer follow-ups. Have you explored those?"},
+    {who:'c',text:"No, I didn't realize it could do post-launch stuff."},
+    {who:'a',text:"That's actually the core use case for established stores. I'll set up your analytics dashboard now — you'll see your first visitor insights within 24 hours. This is where it gets interesting."},
+    {who:'c',text:"OK that actually makes sense for where I am now. I'll keep it."},
+    {who:'s',text:"◆ Outcome: Saved ✓ · Repositioned value for next phase · No discount · Expansion opportunity identified"}
+  ]}
+];
+
+let simRunning = false;
+function runSimulation() {
+  if (simRunning) return;
+  simRunning = true;
+  const btn = document.getElementById('simBtn');
+  btn.style.opacity = '.5';
+  btn.style.pointerEvents = 'none';
+  btn.textContent = '● Simulation Running...';
+
+  const counter = document.getElementById('simCounter');
+  const countLabel = document.getElementById('simCountLabel');
+  const grid = document.getElementById('simGrid');
+  const metrics = document.getElementById('simMetrics');
+  
+  counter.style.display = 'block';
+  countLabel.style.display = 'block';
+  metrics.style.display = 'block';
+  grid.innerHTML = '';
+
+  // Create all cells
+  PERSONAS.forEach((p, pi) => {
+    const cell = document.createElement('div');
+    cell.className = 'sim-cell';
+    cell.id = 'cell-' + pi;
+    const stratColor = p.strat === 'a' ? '#FF6B5B' : p.strat === 'b' ? '#F5A623' : '#1AAFA0';
+    cell.innerHTML = '<div class="sim-cell-head"><div><span class="sch-av">' + p.av + '</span> <span class="sch-nm">' + p.nm + '</span></div><span class="sch-st st-active" id="st-' + pi + '">Queued</span></div><div class="sim-cell-body" id="body-' + pi + '"></div>';
+    grid.appendChild(cell);
+    // Stagger cell appearance
+    setTimeout(() => cell.classList.add('visible'), pi * 120);
+  });
+
+  // Progressive message reveal per cell
+  let totalDone = 0;
+  PERSONAS.forEach((p, pi) => {
+    const startDelay = pi * 400 + 600;
+    const body = () => document.getElementById('body-' + pi);
+    const status = () => document.getElementById('st-' + pi);
+
+    // Show "Testing" once conversation starts
+    setTimeout(() => {
+      if(status()) { status().textContent = 'Testing'; status().className = 'sch-st st-active'; }
+    }, startDelay);
+
+    p.msgs.forEach((msg, mi) => {
+      const msgDelay = startDelay + (mi + 1) * 700;
+      setTimeout(() => {
+        const b = body();
+        if (!b) return;
+        const div = document.createElement('div');
+        if (msg.who === 'c') {
+          div.className = 'sim-bubble sim-bubble-c';
+          div.textContent = msg.text;
+        } else if (msg.who === 'a') {
+          div.className = 'sim-bubble sim-bubble-a strat-' + p.strat;
+          div.textContent = msg.text;
+        } else {
+          div.className = 'sim-bubble';
+          div.style.cssText = 'align-self:center;font-family:"JetBrains Mono",monospace;font-size:.5rem;color:#8A8F97;padding:.15rem .4rem;text-align:center;line-height:1.4';
+          div.textContent = msg.text;
+        }
+        div.style.animation = 'simFade .3s ease forwards';
+        b.appendChild(div);
+        b.scrollTop = b.scrollHeight;
+      }, msgDelay);
+    });
+
+    // Set final status
+    const finalDelay = startDelay + (p.msgs.length + 1) * 700;
+    setTimeout(() => {
+      const s = status();
+      if (!s) return;
+      if (p.outcome === 'saved') { s.textContent = 'Saved ✓'; s.className = 'sch-st st-saved'; }
+      else if (p.outcome === 'lost') { s.textContent = 'Lost ✕'; s.className = 'sch-st st-lost'; }
+      else { s.textContent = 'Escalated'; s.className = 'sch-st st-esc'; }
+      totalDone++;
+    }, finalDelay);
+  });
+
+  // Animate counter
+  const duration = PERSONAS.length * 400 + PERSONAS[PERSONAS.length-1].msgs.length * 700 + 2000;
+  const start = Date.now();
+  const tick = () => {
+    const p = Math.min((Date.now() - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    document.getElementById('simCount').textContent = Math.round(eased * 500);
+    if (p < 1) requestAnimationFrame(tick);
+    else {
+      document.getElementById('simCount').textContent = '500';
+      document.getElementById('simStatus').innerHTML = '● Complete';
+      document.getElementById('simStatus').style.background = 'rgba(26,175,160,.15)';
+      document.getElementById('simStatus').style.color = '#1AAFA0';
+      // Reveal final metrics
+      document.getElementById('metSave').textContent = '67%';
+      document.getElementById('metSaveC').textContent = '↑ from 34% baseline';
+      document.getElementById('metSaveC').style.color = '#34C77B';
+      document.getElementById('barSave').style.width = '67%';
+      document.getElementById('metSent').textContent = '4.2/5';
+      document.getElementById('metSentC').textContent = '↑ from 2.8 baseline';
+      document.getElementById('metSentC').style.color = '#34C77B';
+      document.getElementById('barSent').style.width = '84%';
+      document.getElementById('metCost').textContent = '$0.40';
+      document.getElementById('metCostC').textContent = '↓ from $18.00 baseline';
+      document.getElementById('metCostC').style.color = '#34C77B';
+      document.getElementById('barCost').style.width = '8%';
+      // Show strategy results
+      document.getElementById('simStrats').style.opacity = '1';
+      btn.textContent = '✓ Simulation Complete — 500 Subscribers Processed';
+      btn.style.background = '#E6F9F6';
+      btn.style.color = '#0E8577';
+      btn.style.boxShadow = 'none';
+      btn.style.opacity = '1';
+    }
+  };
+  requestAnimationFrame(tick);
+}
+</script>
+
+</body>
+</html>
